@@ -1,0 +1,75 @@
+/* Tema Dark Global */
+body {
+    background-color: #0b0c10;
+    font-family: 'Inter', sans-serif;
+    color: #ffffff;
+}
+
+/* Navegação */
+.nav-link {
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #17a2b8 !important;
+    transform: scale(1.05);
+}
+
+/* Cards */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(23, 162, 184, 0.2);
+}
+
+/* Ícones decorativos */
+.fa-4x, .fa-3x, .fa-2x {
+    filter: drop-shadow(0 0 6px rgba(23, 162, 184, 0.4));
+}
+
+/* Lista de fixação */
+.list-group-item {
+    background-color: transparent !important;
+    border-left: none;
+    border-right: none;
+}
+
+/* Modal */
+.modal-content {
+    border-radius: 16px;
+}
+
+/* Footer */
+footer {
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+/* Responsividade refinada */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    nav {
+        margin-top: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .display-5 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .nav-link {
+        padding: 0.5rem;
+    }
+    .card-body {
+        padding: 1.2rem;
+    }
+}
