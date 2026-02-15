@@ -1,75 +1,363 @@
 /* Tema Dark Global */
 body {
-    background-color: #0b0c10;
-    font-family: 'Inter', sans-serif;
-    color: #ffffff;
+  background-color: #0b0c10;
+  font-family: "Inter", sans-serif;
+  color: #ffffff;
 }
 
 /* Navegação */
 .nav-link {
-    transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .nav-link:hover {
-    color: #17a2b8 !important;
-    transform: scale(1.05);
+  color: #17a2b8 !important;
+  transform: scale(1.05);
 }
 
 /* Cards */
 .card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 12px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  border-radius: 12px;
 }
 
 .card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(23, 162, 184, 0.2);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(23, 162, 184, 0.2);
 }
 
 /* Ícones decorativos */
-.fa-4x, .fa-3x, .fa-2x {
-    filter: drop-shadow(0 0 6px rgba(23, 162, 184, 0.4));
+.fa-4x,
+.fa-3x,
+.fa-2x {
+  filter: drop-shadow(0 0 6px rgba(23, 162, 184, 0.4));
 }
 
 /* Lista de fixação */
 .list-group-item {
-    background-color: transparent !important;
-    border-left: none;
-    border-right: none;
+  background-color: transparent !important;
+  border-left: none;
+  border-right: none;
 }
 
 /* Modal */
 .modal-content {
-    border-radius: 16px;
+  border-radius: 16px;
 }
 
 /* Footer */
 footer {
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
 }
 
 /* Responsividade refinada */
 @media (max-width: 768px) {
-    header .container {
-        flex-direction: column;
-        text-align: center;
-    }
-    nav {
-        margin-top: 12px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    .display-5 {
-        font-size: 1.8rem;
-    }
+  header .container {
+    flex-direction: column;
+    text-align: center;
+  }
+  nav {
+    margin-top: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .display-5 {
+    font-size: 1.8rem;
+  }
 }
 
 @media (max-width: 576px) {
-    .nav-link {
-        padding: 0.5rem;
+  .nav-link {
+    padding: 0.5rem;
+  }
+  .card-body {
+    padding: 1.2rem;
+  }
+}
+
+/* Container da imagem - sem padding para imagem ocupar todo espaço */
+.text-center.my-4
+  .border.border-secondary.rounded.p-4.bg-black-50.d-inline-block {
+  max-width: 100%;
+  width: auto;
+  padding: 0 !important; /* Remove o padding */
+  background-color: transparent !important; /* Remove fundo */
+  border-width: 1px !important;
+  border-radius: 12px !important; /* Arredondamento sutil do container */
+  overflow: hidden; /* Garante que a imagem respeite o border-radius */
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+/* Estilo específico para a imagem dentro do container */
+.text-center.my-4
+  .border.border-secondary.rounded.p-4.bg-black-50.d-inline-block
+  img {
+  width: 100%; /* Ocupa 100% da largura do container */
+  height: auto;
+  display: block;
+  border-radius: 10px; /* Arredondamento sutil na imagem */
+  transition: transform 0.3s ease;
+}
+
+/* Efeito hover na imagem */
+.text-center.my-4
+  .border.border-secondary.rounded.p-4.bg-black-50.d-inline-block:hover {
+  border-color: #17a2b8 !important;
+  box-shadow: 0 0 15px rgba(23, 162, 184, 0.3);
+}
+
+.text-center.my-4
+  .border.border-secondary.rounded.p-4.bg-black-50.d-inline-block:hover
+  img {
+  transform: scale(1.02);
+}
+
+/* Responsividade para tablets */
+@media (max-width: 768px) {
+  .text-center.my-4
+    .border.border-secondary.rounded.p-4.bg-black-50.d-inline-block {
+    width: 95%;
+    border-radius: 10px !important;
+  }
+
+  .text-center.my-4
+    .border.border-secondary.rounded.p-4.bg-black-50.d-inline-block
+    img {
+    border-radius: 10px;
+  }
+}
+
+/* ===== NOVO: Comportamento de rolagem horizontal para mobile ===== */
+@media (max-width: 576px) {
+  /* Container principal da imagem com rolagem horizontal */
+  .text-center.my-4
+    .border.border-secondary.rounded.p-4.bg-black-50.d-inline-block {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important; /* Habilita rolagem horizontal */
+    -webkit-overflow-scrolling: touch !important; /* Rolagem suave no iOS */
+    scrollbar-width: thin !important; /* Barra de rolagem fina no Firefox */
+    white-space: nowrap !important;
+    border-radius: 12px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    display: block !important; /* Muda para block para melhor controle */
+  }
+
+  /* Estilização da barra de rolagem para WebKit (Chrome, Safari, Edge) */
+  .text-center.my-4
+    .border.border-secondary.rounded.p-4.bg-black-50.d-inline-block::-webkit-scrollbar {
+    height: 6px !important; /* Altura da barra de rolagem horizontal */
+  }
+
+  .text-center.my-4
+    .border.border-secondary.rounded.p-4.bg-black-50.d-inline-block::-webkit-scrollbar-track {
+    background: #1a1a1a !important; /* Fundo escuro */
+    border-radius: 10px !important;
+  }
+
+  .text-center.my-4
+    .border.border-secondary.rounded.p-4.bg-black-50.d-inline-block::-webkit-scrollbar-thumb {
+    background: #17a2b8 !important; /* Cor ciano do tema */
+    border-radius: 10px !important;
+  }
+
+  .text-center.my-4
+    .border.border-secondary.rounded.p-4.bg-black-50.d-inline-block::-webkit-scrollbar-thumb:hover {
+    background: #138496 !important; /* Tom mais escuro no hover */
+  }
+
+  /* Imagem dentro do container com rolagem */
+  .text-center.my-4
+    .border.border-secondary.rounded.p-4.bg-black-50.d-inline-block
+    img {
+    width: auto !important; /* Largura automática para não comprimir */
+    max-width: none !important; /* Remove limite máximo */
+    height: auto !important;
+    max-height: 200px !important; /* Altura máxima confortável para mobile */
+    display: inline-block !important; /* Permite rolagem horizontal */
+    border-radius: 8px !important;
+    margin: 0 auto !important;
+  }
+
+  /* Ajuste do container pai para centralizar */
+  .text-center.my-4 {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    width: 100% !important;
+    overflow: hidden !important; /* Esconde qualquer vazamento */
+  }
+
+  /* Indicador visual sutil de que há rolagem */
+  .text-center.my-4
+    .border.border-secondary.rounded.p-4.bg-black-50.d-inline-block::after {
+    content: "⇆ deslize para ver mais ⇆" !important;
+    display: block !important;
+    text-align: center !important;
+    color: #17a2b8 !important;
+    font-size: 12px !important;
+    opacity: 0.8 !important;
+    padding: 8px 0 4px !important;
+    animation: pulse-slide 2s infinite !important;
+    white-space: normal !important;
+  }
+
+  /* Animação sutil para as setas indicativas */
+  @keyframes pulse-slide {
+    0%,
+    100% {
+      opacity: 0.4;
+      transform: translateX(0);
     }
-    .card-body {
-        padding: 1.2rem;
+    50% {
+      opacity: 1;
+      transform: translateX(5px);
     }
+  }
+}
+
+/* Ajustes para tablets com rolagem horizontal */
+@media (min-width: 577px) and (max-width: 768px) {
+  .text-center.my-4
+    .border.border-secondary.rounded.p-4.bg-black-50.d-inline-block {
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    white-space: nowrap !important;
+    display: block !important;
+  }
+
+  .text-center.my-4
+    .border.border-secondary.rounded.p-4.bg-black-50.d-inline-block
+    img {
+    width: auto !important;
+    max-width: none !important;
+    max-height: 250px !important;
+    display: inline-block !important;
+  }
+
+  .text-center.my-4
+    .border.border-secondary.rounded.p-4.bg-black-50.d-inline-block::-webkit-scrollbar {
+    height: 6px !important;
+  }
+}
+
+/* Suporte para telas grandes (acima de 1200px) */
+@media (min-width: 1200px) {
+  .text-center.my-4
+    .border.border-secondary.rounded.p-4.bg-black-50.d-inline-block {
+    max-width: 90%;
+  }
+}
+
+/* Classe para container de imagem - comportamento padrão (desktop) */
+.lab-image-container {
+  max-width: 100%;
+  width: auto;
+  padding: 0 !important;
+  background-color: transparent !important;
+  border: 1px solid #6c757d !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+/* Imagem dentro do container - comportamento padrão (desktop) */
+.lab-image-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+/* Efeito hover padrão */
+.lab-image-container:hover {
+  border-color: #17a2b8 !important;
+  box-shadow: 0 0 15px rgba(23, 162, 184, 0.3);
+}
+
+.lab-image-container:hover img {
+  transform: scale(1.02);
+}
+
+/* ===== APENAS MOBILE: comportamento de rolagem ===== */
+@media (max-width: 768px) {
+  .lab-image-container {
+    width: 100% !important;
+    overflow-x: auto !important; /* Rolagem horizontal apenas no mobile */
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important; /* Rolagem suave no iOS */
+    scrollbar-width: thin !important;
+    white-space: nowrap !important;
+    display: block !important;
+  }
+
+  .lab-image-container img {
+    width: auto !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: 220px !important;
+    display: inline-block !important;
+    border-radius: 8px !important;
+    margin: 0 auto !important;
+  }
+
+  /* Barra de rolagem personalizada apenas no mobile */
+  .lab-image-container::-webkit-scrollbar {
+    height: 5px !important;
+  }
+
+  .lab-image-container::-webkit-scrollbar-track {
+    background: #1a1a1a !important;
+    border-radius: 10px !important;
+  }
+
+  .lab-image-container::-webkit-scrollbar-thumb {
+    background: #17a2b8 !important;
+    border-radius: 10px !important;
+  }
+
+  /* Indicador visual apenas no mobile */
+  .lab-image-container::after {
+    content: "⇆ deslize ⇆" !important;
+    display: block !important;
+    text-align: center !important;
+    color: #17a2b8 !important;
+    font-size: 12px !important;
+    opacity: 0.7 !important;
+    padding: 4px 0 !important;
+    animation: pulse-arrow 1.5s infinite !important;
+    white-space: normal !important;
+  }
+
+  @keyframes pulse-arrow {
+    0%,
+    100% {
+      opacity: 0.3;
+      transform: translateX(0);
+    }
+    50% {
+      opacity: 0.8;
+      transform: translateX(5px);
+    }
+  }
+}
+
+/* Ajuste fino para mobile pequeno */
+@media (max-width: 576px) {
+  .lab-image-container img {
+    max-height: 180px !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .container.text-center.text-white-50 footer {
+    text-align: left !important;
+  }
 }

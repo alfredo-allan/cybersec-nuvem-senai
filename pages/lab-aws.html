@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab AWS S3 ☁️</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Animate.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <!-- Header com Navegação (mesmo da página principal) -->
+    <header class="container-fluid py-3 border-bottom border-secondary">
+      <div
+        class="container d-flex flex-wrap justify-content-between align-items-center"
+      >
+        <h1 class="h3 mb-0 text-white">
+          <a href="../index.html" class="text-white text-decoration-none">
+            <i class="fas fa-cloud-upload-alt me-2"></i>CyberSec Nuvem
+          </a>
+        </h1>
+        <nav class="nav">
+          <a class="nav-link text-white" href="../index.html#definicoes"
+            ><i class="fas fa-book me-1"></i>Definições</a
+          >
+          <a class="nav-link text-white" href="../index.html#tipos"
+            ><i class="fas fa-sitemap me-1"></i>Tipos</a
+          >
+          <a class="nav-link text-white" href="../index.html#desafios"
+            ><i class="fas fa-shield-alt me-1"></i>Desafios</a
+          >
+          <a class="nav-link text-white" href="../index.html#fixacao"
+            ><i class="fas fa-brain me-1"></i>Fixação</a
+          >
+          <a class="nav-link text-white active" href="lab-aws.html"
+            ><i class="fas fa-flask me-1"></i>Lab AWS</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <!-- Cabeçalho do Laboratório -->
+    <section
+      class="container my-5 text-center animate__animated animate__fadeIn"
+    >
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <span class="badge bg-info text-dark mb-3"
+            ><i class="fas fa-flask me-1"></i>Laboratório Prático</span
+          >
+          <h2 class="display-5 fw-bold mb-3 text-white">
+            3.1: Políticas baseadas em recurso para proteger um bucket S3
+          </h2>
+          <p class="lead text-white-50">
+            Aprenda na prática como configurar permissões usando políticas
+            baseadas em identidade e em recurso do IAM e do Amazon S3.
+          </p>
+          <div class="d-flex justify-content-center gap-3 mt-4">
+            <span class="text-white-50"
+              ><i class="far fa-clock text-info me-1"></i>60 minutos</span
+            >
+            <span class="text-white-50"
+              ><i class="fas fa-tachometer-alt text-info me-1"></i>Nível
+              Intermediário</span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Visão Geral e Objetivos -->
+    <section class="container my-5">
+      <div class="row">
+        <div class="col-12">
+          <div
+            class="card bg-dark text-white border-secondary animate__animated animate__fadeInUp"
+          >
+            <div class="card-body">
+              <h4 class="card-title text-white">
+                <i class="fas fa-bullseye text-info me-2"></i>Visão geral e
+                objetivos do laboratório
+              </h4>
+              <p class="text-white-50">
+                Neste laboratório, você vai aprender a configurar permissões
+                usando políticas baseadas em identidade e em recurso do AWS
+                Identity and Access Management (IAM), como as políticas de
+                bucket do Amazon Simple Storage Service (Amazon S3). Você também
+                vai aprender como as políticas do IAM e as políticas de recursos
+                definem permissões de acesso.
+              </p>
+
+              <h5 class="text-white mt-4">
+                Depois de concluir o laboratório, você será capaz de:
+              </h5>
+              <ul class="list-group list-group-flush bg-transparent mt-3">
+                <li class="list-group-item bg-dark text-white border-secondary">
+                  <i class="fas fa-check-circle text-info me-2"></i>Reconhecer
+                  como usar as políticas baseadas em identidade e em recurso do
+                  IAM para definir um controle de acesso refinado aos serviços e
+                  recursos da AWS.
+                </li>
+                <li class="list-group-item bg-dark text-white border-secondary">
+                  <i class="fas fa-check-circle text-info me-2"></i>Descrever
+                  como um usuário do IAM pode assumir um perfil do IAM para
+                  obter diferentes permissões de acesso a uma conta da AWS.
+                </li>
+                <li class="list-group-item bg-dark text-white border-secondary">
+                  <i class="fas fa-check-circle text-info me-2"></i>Explicar
+                  como as políticas de bucket do S3 e as políticas baseadas em
+                  identidade do IAM que são atribuídas a usuários e perfis do
+                  IAM afetam o que os usuários podem visualizar ou modificar nos
+                  diversos serviços da AWS no console de gerenciamento da AWS.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Duração e Restrições -->
+    <section class="container my-5">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div
+            class="card bg-dark text-white border-secondary h-100 animate__animated animate__fadeInLeft"
+          >
+            <div class="card-body">
+              <i class="fas fa-hourglass-half fa-2x text-info mb-3"></i>
+              <h5 class="card-title">Duração</h5>
+              <p class="card-text text-white-50">
+                Este laboratório levará aproximadamente
+                <strong>60 minutos</strong> para ser concluído.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div
+            class="card bg-dark text-white border-secondary h-100 animate__animated animate__fadeInRight"
+          >
+            <div class="card-body">
+              <i class="fas fa-exclamation-triangle fa-2x text-info mb-3"></i>
+              <h5 class="card-title">Restrições de serviço AWS</h5>
+              <p class="card-text text-white-50">
+                Neste ambiente de laboratório, o acesso aos serviços e às ações
+                de serviços da AWS pode ser restrito aos necessários para
+                concluir as instruções do laboratório. Você poderá encontrar
+                erros se tentar acessar outros serviços ou executar ações além
+                das descritas neste laboratório.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cenário - Arquitetura Inicial -->
+    <section class="container my-5">
+      <h3 class="text-white mb-4">
+        <i class="fas fa-project-diagram text-info me-2"></i>Cenário
+      </h3>
+      <div
+        class="card bg-dark text-white border-secondary animate__animated animate__fadeInUp"
+      >
+        <div class="card-body">
+          <p class="text-white-50">
+            O diagrama a seguir mostra a arquitetura criada para você na AWS no
+            início do laboratório.
+          </p>
+
+          <!-- Espaço para imagem - Arquitetura Inicial -->
+          <div class="text-center my-4">
+            <div class="lab-image-container">
+              <img
+                src="../images/diagrama-inicial-lab.png"
+                alt="Diagrama inicial do laboratório AWS"
+                style="border-radius: 5px"
+              />
+            </div>
+          </div>
+
+          <p class="text-white-50 mt-4">
+            O ambiente de laboratório tem três buckets pré-configurados do
+            Amazon S3: <strong>bucket1</strong>, <strong>bucket2</strong> e
+            <strong>bucket3</strong>. O ambiente também tem um perfil do IAM
+            pré-configurado, que permite acesso a determinados buckets e seus
+            objetos quando assumido. Você vai analisar diversas políticas para
+            entender melhor como elas controlam seu nível de acesso.
+          </p>
+
+          <div
+            class="alert alert-info bg-info bg-opacity-10 text-info border-info"
+          >
+            <i class="fas fa-info-circle me-2"></i>
+            Ao final deste laboratório, você terá criado a arquitetura mostrada
+            no diagrama a seguir.
+          </div>
+
+          <!-- Espaço para imagem - Arquitetura Final -->
+          <div class="text-center my-4">
+            <div class="lab-image-container">
+              <img
+                src="../images/diagrama-final-lab.png"
+                alt="Diagrama final do laboratório AWS"
+                style="border-radius: 5px"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Passo a Passo do Laboratório -->
+    <section class="container my-5">
+      <h3 class="text-white mb-4">
+        <i class="fas fa-list-ol text-info me-2"></i>Passo a Passo
+      </h3>
+
+      <!-- Passo 1: Assumir perfil IAM -->
+      <div
+        class="card bg-dark text-white border-secondary mb-4 animate__animated animate__fadeInLeft"
+      >
+        <div class="card-body">
+          <h5 class="card-title text-white">
+            <span class="badge bg-info text-dark me-2">1</span>
+            Assumir o perfil BucketsAccessRole do IAM
+          </h5>
+          <ol
+            class="list-group list-group-numbered list-group-flush bg-transparent mt-3"
+          >
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              No canto superior direito da página, escolha
+              <strong>devuser</strong>, depois selecione
+              <strong>Alternar perfil</strong>.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Se a página Alternar perfil for exibida, escolha
+              <strong>Alternar perfil</strong>.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Configure o seguinte:
+              <ul class="mt-2">
+                <li>
+                  <strong>Conta:</strong> insira o valor de AccountID do painel
+                  Detalhes da AWS na página de instruções do laboratório.
+                </li>
+                <li>
+                  <strong>Perfil:</strong> insira
+                  <code>BucketsAccessRole</code>.
+                </li>
+                <li><strong>Nome de exibição:</strong> deixe em branco.</li>
+              </ul>
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Selecione <strong>Alternar perfil</strong>.
+            </li>
+          </ol>
+          <div
+            class="alert alert-success bg-success bg-opacity-10 text-success border-success mt-3"
+          >
+            <i class="fas fa-check-circle me-2"></i>
+            Você assumiu com sucesso o perfil do IAM chamado
+            <strong>BucketsAccessRole</strong>, que foi pré-configurado para
+            este laboratório.
+          </div>
+          <div
+            class="alert alert-warning bg-warning bg-opacity-10 text-warning border-warning"
+          >
+            <i class="fas fa-lightbulb me-2"></i>
+            <strong>Dica:</strong> é possível perceber que seu perfil foi
+            alterado ao observar o canto superior direito do console. Observe
+            que <strong>BucketsAccessRole</strong> é exibido onde
+            <strong>devuser</strong> era exibido antes.
+          </div>
+        </div>
+      </div>
+
+      <!-- Passo 2: Baixar objeto do S3 -->
+      <div
+        class="card bg-dark text-white border-secondary mb-4 animate__animated animate__fadeInRight"
+      >
+        <div class="card-body">
+          <h5 class="card-title text-white">
+            <span class="badge bg-info text-dark me-2">2</span>
+            Tentar baixar um objeto do Amazon S3
+          </h5>
+          <ol
+            class="list-group list-group-numbered list-group-flush bg-transparent mt-3"
+          >
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              No console do Amazon S3, escolha o nome do bucket que contém
+              <strong>bucket1</strong>.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Selecione <strong>Image2.jpeg</strong>, depois escolha
+              <strong>Baixar</strong>.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Abra o arquivo para confirmar se foi baixado.
+            </li>
+          </ol>
+          <div
+            class="alert alert-info bg-info bg-opacity-10 text-info border-info mt-3"
+          >
+            <i class="fas fa-search me-2"></i>
+            <strong>Análise:</strong> o download foi bem-sucedido, o que
+            significa que a política ou as políticas aplicadas a
+            <strong>BucketsAccessRole</strong> permitem a ação
+            <code>s3:GetObject</code> em <strong>bucket1</strong>.
+          </div>
+        </div>
+      </div>
+
+      <!-- Passo 3: Testar acesso ao IAM -->
+      <div
+        class="card bg-dark text-white border-secondary mb-4 animate__animated animate__fadeInLeft"
+      >
+        <div class="card-body">
+          <h5 class="card-title text-white">
+            <span class="badge bg-info text-dark me-2">3</span>
+            Testar o acesso ao IAM com BucketsAccessRole
+          </h5>
+          <ol
+            class="list-group list-group-numbered list-group-flush bg-transparent mt-3"
+          >
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Acesse o console do IAM.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              No painel de navegação à esquerda, selecione
+              <strong>Grupos de usuários</strong>.
+            </li>
+          </ol>
+          <div
+            class="alert alert-danger bg-danger bg-opacity-10 text-danger border-danger mt-3"
+          >
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <strong>Observação:</strong> ao trocar de perfil, as permissões que
+            você tem para interagir com diferentes serviços da AWS são
+            alteradas. Ao navegar no console do IAM, você verá novas mensagens
+            de erro informando que o acesso não está autorizado.
+          </div>
+          <div
+            class="alert alert-info bg-info bg-opacity-10 text-info border-info"
+          >
+            <i class="fas fa-search me-2"></i>
+            <strong>Análise:</strong> uma mensagem de erro é exibida. Você não
+            tem mais permissões para visualizar a página de grupos de usuários
+            do IAM, porque <strong>BucketsAccessRole</strong> não tem a ação
+            <code>iam:ListGroups</code> aplicada a ele.
+          </div>
+        </div>
+      </div>
+
+      <!-- Passo 4: Retornar ao devuser -->
+      <div
+        class="card bg-dark text-white border-secondary mb-4 animate__animated animate__fadeInRight"
+      >
+        <div class="card-body">
+          <h5 class="card-title text-white">
+            <span class="badge bg-info text-dark me-2">4</span>
+            Assumir o perfil devuser novamente
+          </h5>
+          <ol
+            class="list-group list-group-numbered list-group-flush bg-transparent mt-3"
+          >
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              No canto superior direito da página, escolha
+              <strong>BucketsAccessRole</strong>, depois selecione
+              <strong>Retornar</strong>.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              No painel de navegação à esquerda, selecione
+              <strong>Grupos de usuários</strong>.
+            </li>
+          </ol>
+          <div
+            class="alert alert-info bg-info bg-opacity-10 text-info border-info mt-3"
+          >
+            <i class="fas fa-search me-2"></i>
+            <strong>Análise:</strong> agora que você não está mais usando
+            <strong>BucketsAccessRole</strong>, suas permissões são aquelas
+            atribuídas ao usuário <strong>devuser</strong> do IAM (por meio da
+            associação desse usuário a <strong>DeveloperGroup</strong>). Você
+            consegue visualizar a página de grupos de usuários novamente.
+          </div>
+        </div>
+      </div>
+
+      <!-- Passo 5: Analisar política do IAM -->
+      <div
+        class="card bg-dark text-white border-secondary mb-4 animate__animated animate__fadeInLeft"
+      >
+        <div class="card-body">
+          <h5 class="card-title text-white">
+            <span class="badge bg-info text-dark me-2">5</span>
+            Analisar a política do IAM associada a BucketsAccessRole
+          </h5>
+          <ol
+            class="list-group list-group-numbered list-group-flush bg-transparent mt-3"
+          >
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              No painel de navegação à esquerda, selecione
+              <strong>Perfis</strong>.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Procure <strong>BucketsAccessRole</strong> e escolha o nome de
+              perfil quando aparecer.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Escolha a seta à esquerda de
+              <strong>ListAllBucketsPolicy</strong>.
+            </li>
+          </ol>
+          <p class="text-white-50 mt-3">
+            Essa política concede a mesma ação
+            <code>s3:ListAllMyBuckets</code> a todos os recursos. Com essa
+            permissão, você pode visualizar todos os buckets do S3 ao assumir
+            BucketsAccessRole.
+          </p>
+
+          <ol
+            class="list-group list-group-numbered list-group-flush bg-transparent mt-3"
+            start="4"
+          >
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Escolha a seta à esquerda de <strong>GrantBucket1Access</strong>.
+            </li>
+          </ol>
+
+          <p class="text-white-50 mt-3">
+            Essa política permite as ações <code>s3:GetObject</code>,
+            <code>s3:ListObjects</code> e <code>s3:ListBucket</code>. Observe
+            que essa política não permite <code>s3:PutObject</code>. As ações
+            permitidas são concedidas apenas a recursos específicos, a
+            <strong>bucket1</strong> e a todos os objetos dentro de
+            <strong>bucket1</strong> (conforme indicado por <code>/*</code>). O
+            asterisco (*) é um caractere curinga, o que indica que estabelece
+            correspondência com qualquer valor.
+          </p>
+
+          <p class="text-white-50">
+            Por causa dessa política, quando você assumiu BucketsAccessRole,
+            conseguiu visualizar e baixar objetos de <strong>bucket1</strong>.
+          </p>
+        </div>
+      </div>
+
+      <!-- Passo 6: Salvar política -->
+      <div
+        class="card bg-dark text-white border-secondary mb-4 animate__animated animate__fadeInRight"
+      >
+        <div class="card-body">
+          <h5 class="card-title text-white">
+            <span class="badge bg-info text-dark me-2">6</span>
+            Salvar uma cópia da política GrantBucket1Access
+          </h5>
+          <ol
+            class="list-group list-group-numbered list-group-flush bg-transparent mt-3"
+          >
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Posicione o cursor no início da linha 1 dos detalhes da política e
+              selecione todas as linhas do código (até a linha 17).
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Copie a política em formato JSON para a área de transferência.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Abra um novo arquivo de texto em seu computador e cole a política
+              que acabou de copiar.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Salve o documento de política como
+              <strong>GrantBucket1Access.json</strong> no computador em um local
+              que você lembre.
+            </li>
+          </ol>
+
+          <div class="mt-4">
+            <h6 class="text-white">Exemplo da política em JSON:</h6>
+            <pre
+              class="bg-black text-white-50 p-3 rounded border border-secondary"
+              style="font-size: 0.8rem"
+            ><code>{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:ListObjects",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::bucket1",
+        "arn:aws:s3:::bucket1/*"
+      ]
+    }
+  ]
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Passo 7: Relações de confiança -->
+      <div
+        class="card bg-dark text-white border-secondary mb-4 animate__animated animate__fadeInLeft"
+      >
+        <div class="card-body">
+          <h5 class="card-title text-white">
+            <span class="badge bg-info text-dark me-2">7</span>
+            Analisar relações de confiança
+          </h5>
+          <ol
+            class="list-group list-group-numbered list-group-flush bg-transparent mt-3"
+          >
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Role a página de volta para cima e escolha a guia
+              <strong>Relações de confiança</strong>.
+            </li>
+          </ol>
+          <p class="text-white-50 mt-3">
+            Observe que o usuário <strong>devuser</strong> do IAM nessa conta da
+            AWS está listado como uma entidade confiável que pode assumir esse
+            perfil.
+          </p>
+          <p class="text-white-50">
+            Observe que o número de conta que aparece no canto superior direito
+            do console (depois de devuser) é igual ao número de conta na lista
+            Entidades confiáveis (sem os traços).
+          </p>
+
+          <div
+            class="alert alert-info bg-info bg-opacity-10 text-info border-info mt-3"
+          >
+            <i class="fas fa-info-circle me-2"></i>
+            <strong>Observação:</strong> O AWS Security Token Service (AWS STS)
+            fornecerá credenciais temporárias a qualquer entidade confiável que
+            pedir para assumir o perfil. Essa política de confiança confia em um
+            usuário do IAM na mesma conta. No entanto, uma política de confiança
+            pode ser configurada para confiar em uma ou mais entidades
+            principais, até mesmo em outras contas da AWS. Exemplos de outras
+            entidades principais são serviços da AWS, perfis do IAM e usuários
+            do IAM.
+          </div>
+        </div>
+      </div>
+
+      <!-- Passo 8: Upload para bucket2 -->
+      <div
+        class="card bg-dark text-white border-secondary mb-4 animate__animated animate__fadeInRight"
+      >
+        <div class="card-body">
+          <h5 class="card-title text-white">
+            <span class="badge bg-info text-dark me-2">8</span>
+            Assumir BucketsAccessRole e fazer upload em bucket2
+          </h5>
+          <ol
+            class="list-group list-group-numbered list-group-flush bg-transparent mt-3"
+          >
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Para assumir BucketsAccessRole, escolha
+              <strong>devuser</strong> no canto superior direito da página.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Em Histórico de perfis, selecione
+              <strong>BucketsAccessRole</strong>.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Acesse o console do Amazon S3.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Selecione o nome de bucket que contém <strong>bucket2</strong>.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Observe que esse bucket ainda não tem um arquivo
+              <strong>Image2.jpg</strong>.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Escolha <strong>Fazer upload</strong>, depois selecione
+              <strong>Adicionar arquivos</strong>.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Navegue até o arquivo <strong>Image2.jpg</strong> baixado
+              anteriormente de bucket1 e escolha-o.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Escolha <strong>Fazer upload</strong>.
+            </li>
+            <li class="list-group-item bg-dark text-white-50 border-secondary">
+              Escolha <strong>Fechar</strong>.
+            </li>
+          </ol>
+
+          <div
+            class="alert alert-info bg-info bg-opacity-10 text-info border-info mt-3"
+          >
+            <i class="fas fa-search me-2"></i>
+            <strong>Análise:</strong> depois de assumir BucketsAccessRole, você
+            conseguiu acessar bucket1 para baixar um objeto. Depois, você fez
+            upload do mesmo objeto em bucket2.
+          </div>
+
+          <p class="text-white-50 mt-3">
+            Depois de inspecionar as políticas anexadas a BucketsAccessRole,
+            você sabe que as permissões do Amazon S3 que foram concedidas a esse
+            perfil eram limitadas para bucket1, conforme mostrado no diagrama a
+            seguir.
+          </p>
+          <p class="text-white-50">
+            A política <strong>GrantBucket1Access</strong> está anexada a
+            BucketsAccessRole. Quando o perfil é assumido, o usuário pode
+            acessar objetos em bucket1 e fazer upload de objetos em bucket2.
+          </p>
+
+          <!-- Espaço para imagem - Diagrama final (CORRIGIDO) -->
+          <div class="text-center my-4">
+            <div class="lab-image-container">
+              <img
+                src="../images/diagrama-permissoes-lab.png"
+                alt="Diagrama de permissões do laboratório AWS"
+                style="border-radius: 5px"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção de Dicas e Considerações Finais -->
+    <section class="container my-5">
+      <div
+        class="card bg-dark text-white border-info animate__animated animate__fadeInUp"
+      >
+        <div class="card-body">
+          <div class="d-flex align-items-start">
+            <div class="me-3">
+              <i class="fas fa-lightbulb fa-3x text-warning"></i>
+            </div>
+            <div>
+              <h4 class="text-white">
+                <i class="fas fa-graduation-cap text-info me-2"></i
+                >Considerações do Treinamento AWS
+              </h4>
+              <p class="text-white-50">
+                Este laboratório demonstra na prática como as políticas baseadas
+                em identidade e em recurso controlam o acesso aos recursos da
+                AWS. Pontos importantes para fixar:
+              </p>
+              <ul class="list-group list-group-flush bg-transparent mt-3">
+                <li
+                  class="list-group-item bg-dark text-white-50 border-secondary"
+                >
+                  <i class="fas fa-key text-info me-2"></i
+                  ><strong>Políticas baseadas em identidade</strong> são
+                  anexadas a usuários, grupos ou perfis IAM.
+                </li>
+                <li
+                  class="list-group-item bg-dark text-white-50 border-secondary"
+                >
+                  <i class="fas fa-bucket text-info me-2"></i
+                  ><strong>Políticas baseadas em recurso</strong> são anexadas
+                  diretamente aos recursos (como buckets S3).
+                </li>
+                <li
+                  class="list-group-item bg-dark text-white-50 border-secondary"
+                >
+                  <i class="fas fa-exchange-alt text-info me-2"></i>O
+                  <strong>Princípio do Menor Privilégio</strong> é fundamental:
+                  conceda apenas as permissões necessárias.
+                </li>
+                <li
+                  class="list-group-item bg-dark text-white-50 border-secondary"
+                >
+                  <i class="fas fa-clock text-info me-2"></i>Perfis IAM fornecem
+                  <strong>credenciais temporárias</strong> via AWS STS,
+                  aumentando a segurança.
+                </li>
+                <li
+                  class="list-group-item bg-dark text-white-50 border-secondary"
+                >
+                  <i class="fas fa-file-code text-info me-2"></i>Políticas em
+                  JSON permitem <strong>controle refinado</strong> sobre ações e
+                  recursos específicos.
+                </li>
+              </ul>
+              <div
+                class="alert alert-success bg-success bg-opacity-10 text-success border-success mt-4"
+              >
+                <i class="fas fa-check-circle me-2"></i>
+                <strong>Laboratório concluído com sucesso!</strong> Você
+                aprendeu na prática como configurar e testar políticas de
+                segurança no AWS S3 e IAM.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer (mesmo da página principal) -->
+    <footer class="container-fluid py-4 mt-5 border-top border-secondary">
+      <div class="container text-center text-white-50">
+        <p class="mb-1">
+          <i class="fas fa-copyright me-1"></i> Projeto desenvolvido no curso de
+          Cibersegurança na Nuvem - SENAI Armando Pereira por Alfredo Allan.
+        </p>
+        <p class="mb-0">
+          <i class="fas fa-cloud me-1"></i> Todos os direitos reservados.
+          Conteúdo fiel ao resumo do NotebookLM.
+        </p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JS Personalizado -->
+    <script src="../js//script.js"></script>
+  </body>
+</html>

@@ -6,17 +6,22 @@ window.addEventListener("load", function () {
   welcomeModal.show();
 });
 
-// Smooth scroll para navegação interna
+// Smooth scroll para navegação interna (apenas para links que começam com #)
 document.querySelectorAll(".nav-link").forEach((link) => {
   link.addEventListener("click", function (e) {
-    e.preventDefault();
-    const targetId = this.getAttribute("href");
-    const targetElement = document.querySelector(targetId);
-    if (targetElement) {
-      targetElement.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+    const href = this.getAttribute("href");
+
+    // Verifica se é um link interno (começa com #)
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const targetElement = document.querySelector(href);
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
     }
+    // Se não começar com #, deixa o comportamento padrão (navegação normal)
   });
 });
