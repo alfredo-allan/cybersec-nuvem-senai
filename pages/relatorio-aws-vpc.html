@@ -1,0 +1,1687 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"
+    />
+    <title>CyberSec Nuvem | Tutorial Master Architect - AWS Lab</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Animate.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+
+    <!-- Favicon inline -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text x='0' y='14' fill='%2317a2b8'>⚡</text></svg>"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #0b0c10;
+        font-family: "Inter", sans-serif;
+        color: #ffffff;
+        line-height: 1.6;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .display-5 {
+        font-weight: 700;
+        background: linear-gradient(135deg, #fff 0%, #17a2b8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+      }
+
+      .lead {
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 400;
+      }
+
+      .text-white-50 {
+        color: #f5f5f5 !important;
+      }
+
+      /* Cards */
+      .card {
+        background-color: #1a1e24 !important;
+        border: 1px solid #6c757d !important;
+        border-radius: 12px !important;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        overflow: hidden;
+        height: 100%;
+      }
+
+      .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(23, 162, 184, 0.2);
+        border-color: #17a2b8 !important;
+      }
+
+      .card-body {
+        padding: 1.8rem;
+      }
+
+      .card-title {
+        color: #17a2b8;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.5rem;
+        border-bottom: 1px solid #6c757d;
+        padding-bottom: 0.8rem;
+      }
+
+      .card-title i {
+        font-size: 2rem;
+        filter: drop-shadow(0 0 6px rgba(23, 162, 184, 0.4));
+      }
+
+      .step-number {
+        display: inline-block;
+        background-color: #17a2b8;
+        color: #0b0c10;
+        font-weight: 700;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 28px;
+        margin-right: 10px;
+        font-size: 14px;
+      }
+
+      /* Navegação */
+      .navbar {
+        background-color: #0b0c10 !important;
+        border-bottom: 1px solid #6c757d;
+        padding: 1rem 0;
+      }
+
+      .navbar-brand {
+        color: #17a2b8 !important;
+        font-weight: 700;
+        font-size: 1.5rem;
+      }
+
+      .navbar-brand i {
+        margin-right: 8px;
+        filter: drop-shadow(0 0 6px rgba(23, 162, 184, 0.4));
+      }
+
+      .nav-link text-white {
+        color: rgba(255, 255, 255, 0.7) !important;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        margin: 0 8px;
+      }
+
+      .nav-link text-white:hover {
+        color: #17a2b8 !important;
+        transform: scale(1.05);
+      }
+
+      /* Containers de imagem */
+      .lab-image-container {
+        max-width: 100%;
+        width: 100%;
+        padding: 0 !important;
+        background-color: transparent !important;
+        border: 1px solid #6c757d !important;
+        border-radius: 12px !important;
+        overflow: hidden;
+        display: inline-block;
+        transition: all 0.3s ease;
+        margin: 1.2rem 0;
+      }
+
+      .lab-image-container img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+      }
+
+      .lab-image-container:hover {
+        border-color: #17a2b8 !important;
+        box-shadow: 0 0 15px rgba(23, 162, 184, 0.3);
+      }
+
+      .lab-image-container:hover img {
+        transform: scale(1.02);
+      }
+
+      .image-caption {
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #17a2b8;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        border-top: 1px solid #6c757d;
+        margin-top: -4px;
+      }
+
+      .image-caption i {
+        margin-right: 6px;
+      }
+
+      /* MOBILE: rolagem horizontal */
+      @media (max-width: 768px) {
+        .lab-image-container {
+          overflow-x: auto !important;
+          -webkit-overflow-scrolling: touch !important;
+          white-space: nowrap !important;
+          display: block !important;
+          cursor: grab;
+        }
+
+        .lab-image-container img {
+          width: auto !important;
+          max-width: none !important;
+          max-height: 250px !important;
+          display: inline-block !important;
+        }
+
+        .lab-image-container::-webkit-scrollbar {
+          height: 5px !important;
+        }
+
+        .lab-image-container::-webkit-scrollbar-track {
+          background: #1a1a1a !important;
+          border-radius: 10px !important;
+        }
+
+        .lab-image-container::-webkit-scrollbar-thumb {
+          background: #17a2b8 !important;
+          border-radius: 10px !important;
+        }
+
+        .lab-image-container::after {
+          content: "⇆ deslize para ver a imagem completa ⇆";
+          display: block !important;
+          text-align: center !important;
+          color: #17a2b8 !important;
+          font-size: 12px !important;
+          opacity: 0.7 !important;
+          padding: 4px 0 !important;
+          animation: pulse-arrow 1.5s infinite !important;
+        }
+
+        @keyframes pulse-arrow {
+          0%,
+          100% {
+            opacity: 0.3;
+            transform: translateX(0);
+          }
+          50% {
+            opacity: 0.8;
+            transform: translateX(5px);
+          }
+        }
+
+        .navbar-nav {
+          flex-direction: column !important;
+          width: 100%;
+        }
+
+        .nav-item {
+          width: 100%;
+          text-align: center;
+          padding: 0.5rem 0;
+        }
+      }
+
+      /* Task badges */
+      .task-badge {
+        background-color: #17a2b8;
+        color: #0b0c10;
+        font-weight: 700;
+        padding: 5px 15px;
+        border-radius: 20px;
+        display: inline-block;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+      }
+
+      .task-badge i {
+        margin-right: 5px;
+      }
+
+      .metric-item {
+        display: inline-flex;
+        align-items: center;
+        background-color: rgba(23, 162, 184, 0.1);
+        padding: 5px 15px;
+        border-radius: 20px;
+        margin: 5px;
+        border: 1px solid rgba(23, 162, 184, 0.3);
+      }
+
+      .metric-item i {
+        color: #17a2b8;
+        margin-right: 8px;
+      }
+
+      /* Blocos de código */
+      pre {
+        background-color: #000000;
+        border: 1px solid #6c757d;
+        border-radius: 8px;
+        padding: 1rem;
+        color: #17a2b8;
+        overflow-x: auto;
+      }
+
+      code {
+        color: #17a2b8;
+        background-color: #2d2d2d;
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+
+      /* Alertas */
+      .alert-tip {
+        background-color: rgba(23, 162, 184, 0.1);
+        border-left: 4px solid #17a2b8;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+        color: #fefefe !important;
+      }
+
+      .alert-tip i {
+        color: #17a2b8 !important;
+        margin-right: 10px;
+      }
+
+      .alert-obstacle {
+        background-color: rgba(220, 53, 69, 0.1);
+        border-left: 4px solid #dc3545;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+
+      .alert-obstacle i {
+        color: #dc3545;
+        margin-right: 10px;
+      }
+
+      .alert-success {
+        background-color: rgba(40, 167, 69, 0.1);
+        border-left: 4px solid #28a745;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+
+      .alert-success i {
+        color: #28a745;
+        margin-right: 10px;
+      }
+
+      /* Footer */
+      footer {
+        background-color: #0b0c10;
+        border-top: 1px solid #6c757d;
+        padding: 2rem 0;
+        margin-top: 3rem;
+      }
+
+      /* Navegação entre tasks */
+      .task-nav {
+        position: sticky;
+        top: 20px;
+        background-color: #1a1e24;
+        border: 1px solid #6c757d;
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .task-nav a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        display: block;
+        padding: 0.5rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+      }
+
+      .task-nav a:hover {
+        color: #17a2b8;
+        background-color: rgba(23, 162, 184, 0.1);
+        transform: translateX(5px);
+      }
+
+      .task-nav a i {
+        margin-right: 8px;
+        width: 20px;
+      }
+
+      /* Animações */
+      .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s ease;
+      }
+
+      .animate-on-scroll.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      h5 {
+        color: #17a2b8;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+      .alert-obstacle.mt-3,
+      .alert-success.mt-3,
+      .alert-obstacle.mt-2,
+      .alert-obstacle.mb-3,
+      .alert-success.mb-3 {
+        color: #babcbd !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+        <h1 class="h3 mb-0 text-white">
+          <a href="/index.html" class="text-white text-decoration-none">
+            <i class="fas fa-cloud-upload-alt me-2"></i>CyberSec Nuvem
+          </a>
+        </h1>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/index.html"
+                ><i class="fas fa-home"></i> Início</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white active" href="/pages/lab-aws.html"
+                ><i class="fas fa-flask"></i> Laboratório</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="#"
+                ><i class="fas fa-book-open"></i> Documentação</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="container mt-5 animate__animated animate__fadeIn">
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex flex-wrap align-items-center mb-3">
+            <span class="task-badge"
+              ><i class="fas fa-microscope"></i> Master Architect</span
+            >
+            <span
+              class="task-badge"
+              style="
+                background-color: transparent;
+                border: 1px solid #17a2b8;
+                color: #17a2b8;
+              "
+              ><i class="fas fa-aws"></i> AWS Lab</span
+            >
+          </div>
+          <h1 class="display-5">
+            Arquitetura de Rede Segura e Bastion Host na AWS
+          </h1>
+          <p class="lead">
+            Tutorial completo passo a passo: configuração de VPC segmentada,
+            Security Groups, NACLs e acesso a instâncias privadas via Bastion
+            Host
+          </p>
+
+          <div class="mt-4">
+            <div class="metric-item">
+              <i class="fas fa-clock"></i> 4h de laboratório
+            </div>
+            <div class="metric-item">
+              <i class="fas fa-chart-line"></i> Nível: Avançado
+            </div>
+            <div class="metric-item">
+              <i class="fas fa-exclamation-triangle"></i> 6 obstáculos superados
+            </div>
+            <div class="metric-item">
+              <i class="fas fa-image"></i> 36 capturas de tela
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="row">
+        <!-- Sidebar com navegação -->
+        <div class="col-lg-3">
+          <div class="task-nav animate-on-scroll">
+            <h5 class="text-white mb-3">
+              <i class="fas fa-list text-info me-2"></i>Tasks
+            </h5>
+            <a href="#task0"
+              ><i class="fas fa-play"></i> Task 0 - Setup Inicial</a
+            >
+            <a href="#task1"
+              ><i class="fas fa-clipboard-list"></i> Task 1 - Reconhecimento
+              EC2</a
+            >
+            <a href="#task2"
+              ><i class="fas fa-route"></i> Task 2 - Organização de Redes</a
+            >
+            <a href="#task3"
+              ><i class="fas fa-shield-alt"></i> Task 3 - Segurança em
+              Camadas</a
+            >
+            <a href="#task4"
+              ><i class="fas fa-network-wired"></i> Task 4 - Validação de
+              Saída</a
+            >
+            <a href="#task5"
+              ><i class="fas fa-map"></i> Task 5 - Mapeamento NACL</a
+            >
+            <a href="#task6"
+              ><i class="fas fa-server"></i> Task 6 - Bastion Host</a
+            >
+            <a href="#task7"
+              ><i class="fas fa-terminal"></i> Task 7 - SSH Jump</a
+            >
+            <a href="#task8"
+              ><i class="fas fa-globe"></i> Task 8 - Validação Web</a
+            >
+          </div>
+        </div>
+
+        <!-- Conteúdo principal -->
+        <div class="col-lg-9">
+          <!-- TASK 0: Setup Inicial -->
+          <section id="task0" class="mb-5 animate-on-scroll">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title">
+                  <i class="fas fa-play-circle"></i>
+                  Task 0: Setup Inicial do Laboratório
+                </h2>
+
+                <div class="step">
+                  <p class="text-white-50">
+                    Configuração inicial do ambiente AWS para o laboratório de
+                    VPC segmentada e Bastion Host.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/00_Lab_Initial_Setup.png"
+                      alt="Setup inicial do laboratório AWS"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 0: Configuração
+                      inicial do ambiente - VPC, sub-redes e instâncias base
+                    </div>
+                  </div>
+
+                  <div class="alert-tip">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Setup base:</strong> Ambiente preparado com VPC,
+                    sub-redes pública e privada, e instâncias EC2 provisionadas.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- TASK 1: Reconhecimento EC2 -->
+          <section id="task1" class="mb-5 animate-on-scroll">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title">
+                  <i class="fas fa-clipboard-list"></i>
+                  Task 1: Reconhecimento do Ambiente e Inventário EC2
+                </h2>
+
+                <p class="text-white-50">
+                  Antes de iniciar as configurações de rede e segurança,
+                  acessamos o console do Amazon EC2 para validar o estado das
+                  instâncias provisionadas para o laboratório. Esta etapa é
+                  crucial para identificar os endereços IPs e as zonas de
+                  disponibilidade onde os servidores estão operando.
+                </p>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">1</span> Visualização do Painel
+                    EC2
+                  </h5>
+                  <p class="text-white-50">
+                    Navegação até o painel "Instâncias" com filtro ativo para
+                    Estado da instância = running.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/01_EC2_Inventory_Running_Instances.png"
+                      alt="Inventário de instâncias EC2"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 1: Visualização do
+                      Painel EC2 - Verificação de Instâncias em Execução e IPs
+                      de Rede
+                    </div>
+                  </div>
+
+                  <p class="text-white-50 mt-2">
+                    <strong>Observação Técnica:</strong> Notamos a presença de
+                    três instâncias: ProxyServer1, ProxyServer2 e o AppServer. É
+                    importante observar que apenas os ProxyServers possuem DNS
+                    IPv4 público, enquanto o AppServer está isolado, reafirmando
+                    a necessidade de uma arquitetura de Bastion Host para o
+                    acesso.
+                  </p>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">2</span> Lista Completa de
+                    Instâncias
+                  </h5>
+                  <p class="text-white-50">
+                    Visão geral do console EC2 mostrando todas as instâncias e
+                    seus status.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/04_EC2_Console_Instances_List.png"
+                      alt="Lista de instâncias no console EC2"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 2: Console EC2 -
+                      Lista completa de instâncias com detalhes de IPs e VPC
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">3</span> Detalhes de Segurança do
+                    AppServer
+                  </h5>
+                  <p class="text-white-50">
+                    Acessando a aba de segurança da instância AppServer para
+                    identificar os grupos associados.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/03_EC2_AppServer_Security_Tab.png"
+                      alt="Aba de segurança do AppServer"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 3: AppServer - Aba de
+                      segurança mostrando o Security Group associado
+                    </div>
+                  </div>
+                </div>
+
+                <div class="alert-obstacle mt-3">
+                  <i class="fas fa-exclamation-triangle"></i>
+                  <strong>Ponto crítico:</strong> O AppServer está em sub-rede
+                  privada sem IP público - acesso só é possível através de um
+                  Bastion Host.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- TASK 2: Organização de Redes (VPC & Route Tables) -->
+          <section id="task2" class="mb-5 animate-on-scroll">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title">
+                  <i class="fas fa-route"></i>
+                  Task 2: Organização de Redes (VPC & Route Tables)
+                </h2>
+
+                <p class="text-white-50">
+                  A base de uma nuvem segura é o roteamento. Para configurar a
+                  segurança, precisamos primeiro organizar as tabelas de rotas
+                  que controlam o fluxo de dados na VPC.
+                </p>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">1</span> Identificação da Tabela
+                    de Roteamento (Status Inicial)
+                  </h5>
+                  <p class="text-white-50">
+                    Localizamos a tabela genérica criada pelo sistema. A tabela
+                    vinculada à sub-rede privada estava nomeada como "changeme",
+                    dificultando a auditoria.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/02_VPC_RouteTable_changeme.png"
+                      alt="Tabela de rotas com tag changeme"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 4: Identificação da
+                      tabela de rotas original com a tag pendente de alteração
+                      (changeme)
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">2</span> Padronização de
+                    Nomenclatura
+                  </h5>
+                  <p class="text-white-50">
+                    Aplicamos a nomenclatura correta para alinhar o ambiente ao
+                    padrão de arquitetura da AWS. Editamos a tag Name de
+                    "changeme" para "Private".
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/02_VPC_RouteTable_Rename_Private.png"
+                      alt="Renomeação da tabela de rotas"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 5: Conclusão da Task
+                      2 - Tabela de rotas devidamente renomeada para "Private"
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">3</span> Detalhamento da Rota
+                    Privada
+                  </h5>
+                  <p class="text-white-50">
+                    Validamos que a tabela Private gerencia apenas o tráfego
+                    interno, sem rotas para Internet Gateway.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/02_VPC_RouteTable_Private_Detail.png"
+                      alt="Detalhe da tabela de rotas privada"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 6: Detalhamento da
+                      tabela de rotas privada - apenas tráfego interno
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">4</span> Detalhamento da Rota
+                    Pública
+                  </h5>
+                  <p class="text-white-50">
+                    Validamos que a tabela Public possui rotas para o Internet
+                    Gateway (IGW), permitindo tráfego externo.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/02_VPC_RouteTable_Public_Detail.png"
+                      alt="Detalhe da tabela de rotas pública"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 7: Detalhamento da
+                      tabela de rotas pública - com rota para Internet Gateway
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">5</span> Visualização Consolidada
+                    das Rotas
+                  </h5>
+                  <p class="text-white-50">
+                    Visão geral das tabelas de roteamento configuradas no
+                    ambiente.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/tablelas_rotas.png"
+                      alt="Tabelas de rotas consolidadas"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 8: Visão geral das
+                      tabelas de roteamento da VPC
+                    </div>
+                  </div>
+                </div>
+
+                <div class="alert-success mt-3">
+                  <i class="fas fa-check-circle"></i>
+                  <strong>Resultado:</strong> Nomenclatura padronizada facilita
+                  governança e operação do ambiente.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- TASK 3: Segurança em Camadas (Security Groups) -->
+          <section id="task3" class="mb-5 animate-on-scroll">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title">
+                  <i class="fas fa-shield-alt"></i>
+                  Task 3: Segurança em Camadas (Security Groups)
+                </h2>
+
+                <p class="text-white-50">
+                  Implementamos o conceito de Segurança East-West, restringindo
+                  o acesso ao AppServer apenas através dos proxies autorizados.
+                </p>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">1</span> Regras Iniciais de
+                    Entrada
+                  </h5>
+                  <p class="text-white-50">
+                    Verificação inicial das regras de entrada do Security Group
+                    do AppServer.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/05_SecurityGroup_Inbound_Rules_Initial.png"
+                      alt="Regras iniciais de entrada"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 9: AppServerSG -
+                      Regras de entrada iniciais (porta 80 liberada para
+                      qualquer origem)
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">2</span> Interface de Edição de
+                    Regras
+                  </h5>
+                  <p class="text-white-50">
+                    Acessando a interface de edição das regras de entrada para
+                    configurar restrições.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/06_SecurityGroup_Edit_Interface.png"
+                      alt="Interface de edição de regras"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 10: Interface de
+                      edição de regras de entrada do Security Group
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">3</span> Identificação do ID do
+                    ProxySG1
+                  </h5>
+                  <p class="text-white-50">
+                    Verificando o ID do Security Group do primeiro proxy para
+                    configurar a origem restrita.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/06_SecurityGroup_Proxy1_ID_Check.png"
+                      alt="ID do ProxySG1"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 11: Identificação do
+                      ID do Security Group do ProxyServer1
+                      (sg-08e81a1b52c955db9)
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">4</span> Identificação do ID do
+                    ProxySG2
+                  </h5>
+                  <p class="text-white-50">
+                    Verificando o ID do Security Group do segundo proxy.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/07_SecurityGroup_Proxy2_ID_Check.png"
+                      alt="ID do ProxySG2"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 12: Identificação do
+                      ID do Security Group do ProxyServer2
+                      (sg-0fdba46bc6559744b)
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">5</span> O Desafio de Configuração
+                  </h5>
+                  <p class="text-white-50">
+                    Ao tentar restringir o acesso, identificamos que a console
+                    AWS exige a validação dos IDs através de lista suspensa.
+                    Inserção manual resulta em erro.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/08_Troubleshooting_SG_Selection_Error.png"
+                      alt="Erro de validação"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 13: Erro de validação
+                      ao tentar inserir ID de Security Group manualmente
+                    </div>
+                  </div>
+
+                  <div class="alert-obstacle mt-2">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Obstáculo #1:</strong> A console AWS não aceita
+                    inserção manual de Security Group IDs - é necessário
+                    selecionar da lista suspensa.
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">6</span> A Solução: Seleção via
+                    Lista Suspensa
+                  </h5>
+                  <p class="text-white-50">
+                    Configuramos a origem como "Personalizado" e selecionamos os
+                    IDs diretamente da lista suspensa.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/09_SecurityGroup_AppServer_Custom_Source_Fix.png"
+                      alt="Correção com seleção da lista"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 14: Configuração
+                      correta - seleção dos Security Group IDs via lista
+                      suspensa
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">7</span> Regras Aplicadas com
+                    Sucesso
+                  </h5>
+                  <p class="text-white-50">
+                    As regras foram aplicadas com sucesso. Agora apenas
+                    instâncias dos grupos ProxySG podem acessar a porta 80 do
+                    AppServer.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/10_SecurityGroup_AppServer_Rules_Applied_Success.png"
+                      alt="Regras aplicadas com sucesso"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 15: AppServerSG -
+                      Regras de entrada configuradas com origem restrita aos
+                      Proxies
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">8</span> Validação da Regra SSH
+                  </h5>
+                  <p class="text-white-50">
+                    Verificando a configuração da regra SSH para acesso ao
+                    Bastion Host.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/security-group-ssh.png"
+                      alt="Regra SSH configurada"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 16: Configuração da
+                      regra SSH para acesso ao Bastion Host
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">9</span> Regras do AppServer
+                    (Visão Consolidada)
+                  </h5>
+                  <p class="text-white-50">
+                    Visão geral de todas as regras configuradas no AppServer.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/regras-appserver.png"
+                      alt="Regras consolidadas do AppServer"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 17: Visão consolidada
+                      das regras de segurança do AppServer
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">10</span> Inventário de Security
+                    Groups
+                  </h5>
+                  <p class="text-white-50">
+                    Lista completa de todos os Security Groups configurados na
+                    VPC.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/11_VPC_SecurityGroups_Inventory_List.png"
+                      alt="Inventário de Security Groups"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 18: Inventário
+                      completo de Security Groups da VPC
+                    </div>
+                  </div>
+                </div>
+
+                <div class="alert-success mt-3">
+                  <i class="fas fa-check-circle"></i>
+                  <strong>Resultado:</strong> Segurança East-West implementada -
+                  AppServer responde apenas a requisições dos proxies
+                  autorizados.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- TASK 4: Validação de Conectividade de Saída -->
+          <section id="task4" class="mb-5 animate-on-scroll">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title">
+                  <i class="fas fa-sign-out-alt"></i>
+                  Task 4: Validação de Regras de Saída (Outbound)
+                </h2>
+
+                <p class="text-white-50">
+                  Para concluir o ciclo de comunicação entre as camadas,
+                  validamos se os grupos de segurança dos Proxies permitem o
+                  envio de tráfego.
+                </p>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">1</span> Verificação das Regras de
+                    Saída do ProxySG
+                  </h5>
+                  <p class="text-white-50">
+                    No modelo de Security Groups da AWS, o tráfego é stateful,
+                    mas garantir que as regras de saída não bloqueiem o tráfego
+                    de resposta é uma boa prática de auditoria.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/12_ProxySG_Outbound_Rules_Check.png"
+                      alt="Regras de saída do ProxySG"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 19: ProxySG -
+                      Verificação das regras de saída (outbound)
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- TASK 5: Mapeamento de NACL -->
+          <section id="task5" class="mb-5 animate-on-scroll">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title">
+                  <i class="fas fa-map"></i>
+                  Task 5: Mapeamento e Associação de NACL
+                </h2>
+
+                <p class="text-white-50">
+                  Para garantir que as políticas de segurança de rede sejam
+                  aplicadas corretamente ao servidor de aplicação, realizamos o
+                  mapeamento das Associações de Sub-rede.
+                </p>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">1</span> Inventário de NACLs
+                  </h5>
+                  <p class="text-white-50">
+                    Lista completa das Network ACLs configuradas na VPC.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/13_VPC_NACL_Inventory_List.png"
+                      alt="Inventário de NACLs"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 20: Inventário de
+                      Network ACLs da VPC
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">2</span> Inventário Adicional de
+                    NACLs
+                  </h5>
+                  <p class="text-white-50">
+                    Visão alternativa do inventário de NACLs.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/3_VPC_NetworkACL_Inventory_List.png"
+                      alt="Inventário de NACLs alternativo"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 21: Inventário de
+                      Network ACLs - visão alternativa
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">3</span> Associações de Sub-rede
+                    da NACL
+                  </h5>
+                  <p class="text-white-50">
+                    Selecionamos a NACL e verificamos a aba "Associações de
+                    sub-rede" para confirmar que esta lista gerencia o tráfego
+                    da PrivateSubnet.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/14_VPC_NACL_Subnet_Association_Private.png"
+                      alt="Associações da NACL"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 22: NACL -
+                      Associações de sub-rede confirmando gerenciamento da
+                      PrivateSubnet
+                    </div>
+                  </div>
+                </div>
+
+                <div class="alert-tip mt-3">
+                  <i class="fas fa-lightbulb"></i>
+                  <strong>Conceito chave:</strong> Diferente dos Security
+                  Groups, qualquer regra criada nesta NACL afetará todos os
+                  recursos dentro da PrivateSubnet, independentemente da
+                  instância.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- TASK 6: Implementação do Bastion Host -->
+          <section id="task6" class="mb-5 animate-on-scroll">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title">
+                  <i class="fas fa-server"></i>
+                  Task 6: Provisionamento do Bastion Host
+                </h2>
+
+                <p class="text-white-50">
+                  Devido à ausência de um grupo de segurança pré-configurado
+                  para acesso administrativo, procedemos com a criação manual do
+                  BastionSG.
+                </p>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">1</span> Criação do BastionSG -
+                    Parâmetros
+                  </h5>
+                  <p class="text-white-50">
+                    Criação do Security Group BastionSG na LabVPC com foco em
+                    acesso administrativo via porta 22 (SSH).
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/15_VPC_Creating_BastionSG_Parameters.png"
+                      alt="Criação do BastionSG"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 23: Criação do
+                      BastionSG - Definição de parâmetros e regras de entrada
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">2</span> BastionSG Criado com
+                    Sucesso
+                  </h5>
+                  <p class="text-white-50">
+                    Recurso sg-046fad1c42cf7b70a criado e disponível para
+                    associação.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/16_VPC_BastionSG_Created_Success.png"
+                      alt="BastionSG criado"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 24: BastionSG criado
+                      com sucesso - ID: sg-046fad1c42cf7b70a
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">3</span> Associação ao
+                    ProxyServer1
+                  </h5>
+                  <p class="text-white-50">
+                    O grupo foi anexado ao ProxyServer1 através do console de
+                    gerenciamento de segurança da EC2.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/17_EC2_Proxy1_Dual_Identity_Bastion_Proxy.png"
+                      alt="ProxyServer1 com identidade dupla"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 25: ProxyServer1
+                      agora com identidade dupla - Proxy (HTTP) e Bastion Host
+                      (SSH)
+                    </div>
+                  </div>
+                </div>
+
+                <div class="alert-success mt-3">
+                  <i class="fas fa-check-circle"></i>
+                  <strong>Arquitetura resultante:</strong> ProxyServer1 possui
+                  configuração de segurança composta, permitindo tanto tráfego
+                  HTTP (aplicação) quanto SSH (gestão).
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- TASK 7: O Desafio do SSH Jump -->
+          <section id="task7" class="mb-5 animate-on-scroll">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title">
+                  <i class="fas fa-terminal"></i>
+                  Task 7: O Desafio do Acesso Lateral (SSH Jump)
+                </h2>
+
+                <p class="text-white-50">
+                  A prova de fogo da conectividade interna - acesso ao AppServer
+                  através do Bastion Host.
+                </p>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">1</span> Acesso ao Bastion via
+                    Terminal Local
+                  </h5>
+                  <p class="text-white-50">
+                    Primeiro passo: conectar ao Bastion Host (ProxyServer1) via
+                    SSH.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/18_SSH_Access_Bastion_Success.png"
+                      alt="Acesso SSH ao Bastion"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 26: Acesso SSH ao
+                      Bastion Host (ProxyServer1) bem-sucedido
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">2</span> Tentativa de Salto para o
+                    AppServer
+                  </h5>
+                  <p class="text-white-50">
+                    Tentamos o salto (jump) para o AppServer (10.0.1.94) -
+                    identificamos um erro de Permission Denied.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/19_SSH_Jump_AppServer_Permission_Error.png"
+                      alt="Erro de permissão no SSH Jump"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 27: Erro de
+                      Permission Denied ao tentar SSH Jump para AppServer
+                      (10.0.1.94)
+                    </div>
+                  </div>
+
+                  <div class="alert-obstacle mt-2">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Obstáculo #2:</strong> Falta da chave privada no
+                    segundo salto - o Bastion não tem a chave para acessar o
+                    AppServer.
+                  </div>
+
+                  <pre><code>ssh -i chave.pem ec2-user@10.0.1.94</code></pre>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">3</span> Solução: Transferência da
+                    Chave
+                  </h5>
+                  <p class="text-white-50">
+                    Necessário transferir a chave privada para o Bastion ou usar
+                    SSH Agent Forwarding.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/chave-corrigida.png"
+                      alt="Chave PEM corrigida"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 28: Chave PEM
+                      corrigida e preparada para transferência
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">4</span> Verificação da VPC
+                    Correta
+                  </h5>
+                  <p class="text-white-50">
+                    Validamos se as instâncias estão na mesma VPC para permitir
+                    comunicação.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/vpc-correta.png"
+                      alt="Verificação da VPC"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 29: Verificação -
+                      instâncias na mesma VPC (vpc-0a8e1f2c3d4e5f678)
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">5</span> Verificação do Console
+                    EC2
+                  </h5>
+                  <p class="text-white-50">
+                    Console EC2 mostrando as máquinas configuradas.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/console-ec2-maquinas.png"
+                      alt="Console EC2"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 30: Console EC2 -
+                      visão geral das instâncias
+                    </div>
+                  </div>
+                </div>
+
+                <div class="alert-tip mt-3">
+                  <i class="fas fa-lightbulb"></i>
+                  <strong>Solução:</strong> Use SSH Agent Forwarding:
+                  <code>ssh -A -i bastion.pem ec2-user@bastion-ip</code> e
+                  depois <code>ssh ec2-user@10.0.1.94</code>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- TASK 8: Validação Web -->
+          <section id="task8" class="mb-5 animate-on-scroll">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title">
+                  <i class="fas fa-globe"></i>
+                  Task 8: Finalização - Validação Web
+                </h2>
+
+                <p class="text-white-50">
+                  Concluímos o ciclo instalando o serviço web e validando o
+                  acesso ao AppServer.
+                </p>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">1</span> Instalação do Apache e
+                    Validação
+                  </h5>
+                  <p class="text-white-50">
+                    Via comando remoto SSH, instalamos o httpd (Apache) no
+                    servidor privado e validamos com curl localhost.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/20_Final_Task8_Web_Success.png"
+                      alt="Validação web bem-sucedida"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 31: Validação web
+                      bem-sucedida - servidor privado respondendo com mensagem
+                      personalizada
+                    </div>
+                  </div>
+
+                  <pre><code>curl localhost</code></pre>
+                </div>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">2</span> Terminal - Acesso Final
+                  </h5>
+                  <p class="text-white-50">
+                    Visão do terminal com o acesso final ao AppServer.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/terminal-final.png"
+                      alt="Terminal com acesso final"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 32: Terminal - acesso
+                      final ao AppServer via Bastion Host
+                    </div>
+                  </div>
+                </div>
+
+                <div class="alert-success mt-3">
+                  <i class="fas fa-check-circle"></i>
+                  <strong>Resultado final:</strong> Sucesso! Servidor privado
+                  (AppServer) acessível e servindo conteúdo web através do
+                  Bastion Host.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Resumo de Troubleshooting -->
+          <section class="mt-5 animate-on-scroll">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title">
+                  <i class="fas fa-clipboard-check"></i>
+                  Resumo de Troubleshooting: 6 Obstáculos Superados
+                </h2>
+
+                <div class="row mt-4">
+                  <div class="col-md-6">
+                    <div class="alert-obstacle mb-3">
+                      <i class="fas fa-times-circle"></i>
+                      <strong>Obstáculo 1:</strong> Validação de Security Group
+                      IDs - solução: seleção via lista suspensa
+                    </div>
+                    <div class="alert-obstacle mb-3">
+                      <i class="fas fa-times-circle"></i>
+                      <strong>Obstáculo 2:</strong> Falta da chave privada no
+                      segundo salto - solução: SSH Agent Forwarding
+                    </div>
+                    <div class="alert-obstacle mb-3">
+                      <i class="fas fa-times-circle"></i>
+                      <strong>Obstáculo 3:</strong> Tabela de rotas com tag
+                      'changeme' - solução: padronização de nomenclatura
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="alert-obstacle mb-3">
+                      <i class="fas fa-times-circle"></i>
+                      <strong>Obstáculo 4:</strong> Timeout SSH - solução:
+                      liberação da porta 22 no Security Group
+                    </div>
+                    <div class="alert-obstacle mb-3">
+                      <i class="fas fa-times-circle"></i>
+                      <strong>Obstáculo 5:</strong> VPC incorreta - solução:
+                      verificação e correção do ambiente
+                    </div>
+                    <div class="alert-success mb-3">
+                      <i class="fas fa-check-circle"></i>
+                      <strong>Obstáculo 6:</strong> ICMP bloqueado - solução:
+                      liberação no Security Group
+                    </div>
+                  </div>
+                </div>
+
+                <div class="alert-tip mt-3">
+                  <i class="fas fa-trophy"></i>
+                  <strong>Arquitetura final:</strong> VPC segmentada com
+                  sub-rede privada, Bastion Host para acesso administrativo,
+                  Security Groups com privilégio mínimo, NACL em camada de
+                  sub-rede e validação web bem-sucedida.
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h5>
+              <i class="fas fa-shield-halos text-info"></i> CyberSec Nuvem
+            </h5>
+            <p class="text-white-50">
+              Tutorial Master Architect - Laboratório AWS <br />
+              Curso de Cibersegurança na Nuvem - SENAI
+            </p>
+            <p class="text-white-50 small">
+              <i class="fas fa-image me-2"></i>36 capturas de tela documentadas
+            </p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <p class="text-white-50 mb-0">
+              <i class="fas fa-code-branch text-info me-2"></i> Master Architect
+            </p>
+            <p class="text-white-50 small">
+              <i class="fas fa-calendar-alt me-2"></i> Fevereiro 2026
+            </p>
+            <p class="text-white-50 small">
+              © 2026 CyberSec Nuvem. Todos os direitos reservados.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Animação de scroll -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const elements = document.querySelectorAll(".animate-on-scroll");
+
+        function checkVisibility() {
+          elements.forEach((element) => {
+            const rect = element.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+
+            if (rect.top < windowHeight - 100) {
+              element.classList.add("visible");
+            }
+          });
+        }
+
+        window.addEventListener("scroll", checkVisibility);
+        checkVisibility();
+
+        // Smooth scroll para os links da navegação
+        document.querySelectorAll(".task-nav a").forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute("href");
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+              targetElement.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
