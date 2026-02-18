@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes"
     />
-    <title>CyberSec Nuvem | Tutorial Master Architect - AWS Lab</title>
+    <title>CyberSec Nuvem | Arquitetura de Redes Segura - AWS Lab</title>
 
     <!-- Google Fonts -->
     <link
@@ -486,12 +486,12 @@
             </span>
           </div>
           <h1 class="display-5">
-            Arquitetura de Rede Segura e Bastion Host na AWS
+            Implementação de Arquitetura de Redes Segura na AWS
           </h1>
           <p class="lead">
-            Tutorial completo passo a passo: configuração de VPC segmentada,
-            Security Groups, NACLs e acesso a instâncias privadas via Bastion
-            Host
+            Documentação completa: governança de rotas, perímetro de borda,
+            isolamento da camada de aplicação, Security Group Chaining, Bastion
+            Host e Session Manager
           </p>
 
           <div class="mt-4">
@@ -502,10 +502,13 @@
               <i class="fas fa-chart-line"></i> Nível: Avançado
             </div>
             <div class="metric-item">
-              <i class="fas fa-exclamation-triangle"></i> 6 obstáculos superados
+              <i class="fas fa-exclamation-triangle"></i> 8 tasks concluídas
             </div>
             <div class="metric-item">
-              <i class="fas fa-image"></i> 36 capturas de tela
+              <i class="fas fa-image"></i> 12 capturas de tela
+            </div>
+            <div class="metric-item">
+              <i class="fas fa-check-circle text-success"></i> Score: 40/40
             </div>
           </div>
         </div>
@@ -520,1092 +523,471 @@
             <h5 class="text-white mb-3">
               <i class="fas fa-list text-info me-2"></i>Tasks
             </h5>
-            <a href="#task0"
-              ><i class="fas fa-play"></i> Task 0 - Setup Inicial</a
-            >
             <a href="#task1"
-              ><i class="fas fa-clipboard-list"></i> Task 1 - Reconhecimento
-              EC2</a
+              ><i class="fas fa-clipboard-list"></i> Task 1 - Governança de
+              Rotas</a
             >
             <a href="#task2"
-              ><i class="fas fa-route"></i> Task 2 - Organização de Redes</a
+              ><i class="fas fa-shield-alt"></i> Task 2 - Perímetro de Borda</a
             >
             <a href="#task3"
-              ><i class="fas fa-shield-alt"></i> Task 3 - Segurança em
-              Camadas</a
-            >
-            <a href="#task4"
-              ><i class="fas fa-network-wired"></i> Task 4 - Validação de
-              Saída</a
+              ><i class="fas fa-lock"></i> Task 3 & 4 - Isolamento AppServer</a
             >
             <a href="#task5"
-              ><i class="fas fa-map"></i> Task 5 - Mapeamento NACL</a
-            >
-            <a href="#task6"
-              ><i class="fas fa-server"></i> Task 6 - Bastion Host</a
+              ><i class="fas fa-link"></i> Task 5 - Security Group Chaining</a
             >
             <a href="#task7"
-              ><i class="fas fa-terminal"></i> Task 7 - SSH Jump</a
+              ><i class="fas fa-terminal"></i> Task 7 - Bastion Host (Jump
+              Box)</a
             >
             <a href="#task8"
-              ><i class="fas fa-globe"></i> Task 8 - Validação Web</a
+              ><i class="fas fa-globe"></i> Task 8 - Session Manager</a
             >
           </div>
         </div>
 
         <!-- Conteúdo principal -->
         <div class="col-lg-9">
-          <!-- TASK 0: Setup Inicial -->
-          <section id="task0" class="mb-5 animate-on-scroll">
-            <div class="card">
-              <div class="card-body">
-                <h2 class="card-title">
-                  <i class="fas fa-play-circle"></i>
-                  Task 0: Setup Inicial do Laboratório
-                </h2>
-
-                <div class="step">
-                  <p class="text-white-50">
-                    Configuração inicial do ambiente AWS para o laboratório de
-                    VPC segmentada e Bastion Host.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/00_Lab_Initial_Setup.png"
-                      alt="Setup inicial do laboratório AWS"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 0: Configuração
-                      inicial do ambiente - VPC, sub-redes e instâncias base
-                    </div>
-                  </div>
-
-                  <div class="alert-tip">
-                    <i class="fas fa-info-circle"></i>
-                    <strong>Setup base:</strong> Ambiente preparado com VPC,
-                    sub-redes pública e privada, e instâncias EC2 provisionadas.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- TASK 1: Reconhecimento EC2 -->
+          <!-- TASK 1: Governança e Padronização de Rotas -->
           <section id="task1" class="mb-5 animate-on-scroll">
             <div class="card">
               <div class="card-body">
                 <h2 class="card-title">
-                  <i class="fas fa-clipboard-list"></i>
-                  Task 1: Reconhecimento do Ambiente e Inventário EC2
+                  <i class="fas fa-route"></i>
+                  Task 1: Governança e Padronização de Rotas
                 </h2>
 
                 <p class="text-white-50">
-                  Antes de iniciar as configurações de rede e segurança,
-                  acessamos o console do Amazon EC2 para validar o estado das
-                  instâncias provisionadas para o laboratório. Esta etapa é
-                  crucial para identificar os endereços IPs e as zonas de
-                  disponibilidade onde os servidores estão operando.
+                  <strong>Objetivo:</strong> Identificar e etiquetar
+                  corretamente os recursos de rede para conformidade.
                 </p>
 
                 <div class="step mt-4">
                   <h5>
-                    <span class="step-number">1</span> Visualização do Painel
-                    EC2
+                    <span class="step-number">1</span> Localização da Tabela de
+                    Rotas
                   </h5>
                   <p class="text-white-50">
-                    Navegação até o painel "Instâncias" com filtro ativo para
-                    Estado da instância = running.
+                    <strong>Onde ir:</strong> VPC > Tabelas de rotas.
+                  </p>
+                  <p class="text-white-50">
+                    <strong>Ação Realizada:</strong> Localizada a tabela
+                    rtb-0ad4272549e9fe8cf associada à sub-rede privada e
+                    alterada a tag Name de "changeme" para "Private".
+                  </p>
+                  <p class="text-white-50">
+                    <strong>Explicação Técnica:</strong> A padronização de
+                    nomenclatura é fundamental para automação e auditoria.
+                    Garante que o tráfego da sub-rede privada seja gerenciado
+                    por uma tabela específica.
                   </p>
 
                   <div class="lab-image-container">
                     <img
-                      src="/images/relatorio/01_EC2_Inventory_Running_Instances.png"
-                      alt="Inventário de instâncias EC2"
+                      src="/images/relatorio/01_VPC_RouteTable_Name_Updated_Private.png"
+                      alt="Tabela de rotas renomeada para Private"
                       loading="lazy"
                     />
                     <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 1: Visualização do
-                      Painel EC2 - Verificação de Instâncias em Execução e IPs
-                      de Rede
+                      <i class="fas fa-camera"></i> Figura 1: Tabela de rotas
+                      rtb-0ad4272549e9fe8cf renomeada para "Private"
                     </div>
                   </div>
 
-                  <p class="text-white-50 mt-2">
-                    <strong>Observação Técnica:</strong> Notamos a presença de
-                    três instâncias: ProxyServer1, ProxyServer2 e o AppServer. É
-                    importante observar que apenas os ProxyServers possuem DNS
-                    IPv4 público, enquanto o AppServer está isolado, reafirmando
-                    a necessidade de uma arquitetura de Bastion Host para o
-                    acesso.
-                  </p>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">2</span> Lista Completa de
-                    Instâncias
-                  </h5>
-                  <p class="text-white-50">
-                    Visão geral do console EC2 mostrando todas as instâncias e
-                    seus status.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/04_EC2_Console_Instances_List.png"
-                      alt="Lista de instâncias no console EC2"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 2: Console EC2 -
-                      Lista completa de instâncias com detalhes de IPs e VPC
-                    </div>
+                  <div class="alert-success mt-3">
+                    <i class="fas fa-check-circle"></i>
+                    <strong>Resultado:</strong> Governança estabelecida com
+                    nomenclatura padronizada para fácil identificação e
+                    auditoria.
                   </div>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">3</span> Detalhes de Segurança do
-                    AppServer
-                  </h5>
-                  <p class="text-white-50">
-                    Acessando a aba de segurança da instância AppServer para
-                    identificar os grupos associados.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/03_EC2_AppServer_Security_Tab.png"
-                      alt="Aba de segurança do AppServer"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 3: AppServer - Aba de
-                      segurança mostrando o Security Group associado
-                    </div>
-                  </div>
-                </div>
-
-                <div class="alert-obstacle mt-3">
-                  <i class="fas fa-exclamation-triangle"></i>
-                  <strong>Ponto crítico:</strong> O AppServer está em sub-rede
-                  privada sem IP público - acesso só é possível através de um
-                  Bastion Host.
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- TASK 2: Organização de Redes (VPC & Route Tables) -->
+          <!-- TASK 2: Configuração do Perímetro de Borda -->
           <section id="task2" class="mb-5 animate-on-scroll">
             <div class="card">
               <div class="card-body">
                 <h2 class="card-title">
-                  <i class="fas fa-route"></i>
-                  Task 2: Organização de Redes (VPC & Route Tables)
+                  <i class="fas fa-shield-alt"></i>
+                  Task 2: Configuração do Perímetro de Borda (ProxySG2)
                 </h2>
 
                 <p class="text-white-50">
-                  A base de uma nuvem segura é o roteamento. Para configurar a
-                  segurança, precisamos primeiro organizar as tabelas de rotas
-                  que controlam o fluxo de dados na VPC.
+                  <strong>Objetivo:</strong> Habilitar o acesso público ao
+                  segundo nó de Proxy para garantir alta disponibilidade.
                 </p>
 
                 <div class="step mt-4">
                   <h5>
-                    <span class="step-number">1</span> Identificação da Tabela
-                    de Roteamento (Status Inicial)
+                    <span class="step-number">1</span> Liberação da Porta HTTP
                   </h5>
                   <p class="text-white-50">
-                    Localizamos a tabela genérica criada pelo sistema. A tabela
-                    vinculada à sub-rede privada estava nomeada como "changeme",
-                    dificultando a auditoria.
+                    <strong>Onde ir:</strong> EC2 > Grupos de Segurança >
+                    ProxySG2.
+                  </p>
+                  <p class="text-white-50">
+                    <strong>Ação Realizada:</strong> Adicionada regra de entrada
+                    para protocolo HTTP (porta 80) vinda de 0.0.0.0/0.
+                  </p>
+                  <p class="text-white-50">
+                    <strong>Explicação Técnica:</strong> Define a camada de
+                    borda como funcional, permitindo que requisições externas
+                    cheguem aos servidores de Proxy antes de serem encaminhadas
+                    internamente.
                   </p>
 
                   <div class="lab-image-container">
                     <img
-                      src="/images/relatorio/02_VPC_RouteTable_changeme.png"
-                      alt="Tabela de rotas com tag changeme"
+                      src="/images/relatorio/02_EC2_ProxySG2_Inbound_Rule_HTTP.png"
+                      alt="Regra HTTP no ProxySG2"
                       loading="lazy"
                     />
                     <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 4: Identificação da
-                      tabela de rotas original com a tag pendente de alteração
-                      (changeme)
+                      <i class="fas fa-camera"></i> Figura 2: ProxySG2 - Regra
+                      de entrada HTTP liberada para 0.0.0.0/0
                     </div>
                   </div>
-                </div>
 
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">2</span> Padronização de
-                    Nomenclatura
-                  </h5>
-                  <p class="text-white-50">
-                    Aplicamos a nomenclatura correta para alinhar o ambiente ao
-                    padrão de arquitetura da AWS. Editamos a tag Name de
-                    "changeme" para "Private".
-                  </p>
-
-                  <div class="lab-image-container">
+                  <div class="lab-image-container mt-3">
                     <img
-                      src="/images/relatorio/02_VPC_RouteTable_Rename_Private.png"
-                      alt="Renomeação da tabela de rotas"
+                      src="/images/relatorio/02_VPC_PublicSubnetA_Route_IGW_Analysis.png"
+                      alt="Análise de rota pública"
                       loading="lazy"
                     />
                     <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 5: Conclusão da Task
-                      2 - Tabela de rotas devidamente renomeada para "Private"
-                    </div>
-                  </div>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">3</span> Detalhamento da Rota
-                    Privada
-                  </h5>
-                  <p class="text-white-50">
-                    Validamos que a tabela Private gerencia apenas o tráfego
-                    interno, sem rotas para Internet Gateway.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/02_VPC_RouteTable_Private_Detail.png"
-                      alt="Detalhe da tabela de rotas privada"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 6: Detalhamento da
-                      tabela de rotas privada - apenas tráfego interno
-                    </div>
-                  </div>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">4</span> Detalhamento da Rota
-                    Pública
-                  </h5>
-                  <p class="text-white-50">
-                    Validamos que a tabela Public possui rotas para o Internet
-                    Gateway (IGW), permitindo tráfego externo.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/02_VPC_RouteTable_Public_Detail.png"
-                      alt="Detalhe da tabela de rotas pública"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 7: Detalhamento da
-                      tabela de rotas pública - com rota para Internet Gateway
-                    </div>
-                  </div>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">5</span> Visualização Consolidada
-                    das Rotas
-                  </h5>
-                  <p class="text-white-50">
-                    Visão geral das tabelas de roteamento configuradas no
-                    ambiente.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/tablelas_rotas.png"
-                      alt="Tabelas de rotas consolidadas"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 8: Visão geral das
-                      tabelas de roteamento da VPC
+                      <i class="fas fa-camera"></i> Figura 3: Análise de rota da
+                      sub-rede pública - tráfego direcionado ao Internet Gateway
                     </div>
                   </div>
                 </div>
 
                 <div class="alert-success mt-3">
                   <i class="fas fa-check-circle"></i>
-                  <strong>Resultado:</strong> Nomenclatura padronizada facilita
-                  governança e operação do ambiente.
+                  <strong>Resultado:</strong> Perímetro de borda configurado com
+                  alta disponibilidade através do segundo nó de Proxy.
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- TASK 3: Segurança em Camadas (Security Groups) -->
+          <!-- TASK 3 & 4: Isolamento da Camada de Aplicação -->
           <section id="task3" class="mb-5 animate-on-scroll">
             <div class="card">
               <div class="card-body">
                 <h2 class="card-title">
-                  <i class="fas fa-shield-alt"></i>
-                  Task 3: Segurança em Camadas (Security Groups)
+                  <i class="fas fa-lock"></i>
+                  Task 3 & 4: Isolamento da Camada de Aplicação
                 </h2>
 
                 <p class="text-white-50">
-                  Implementamos o conceito de Segurança East-West, restringindo
-                  o acesso ao AppServer apenas através dos proxies autorizados.
+                  <strong>Objetivo:</strong> Remover a exposição direta do
+                  servidor de aplicação à internet.
                 </p>
 
                 <div class="step mt-4">
                   <h5>
-                    <span class="step-number">1</span> Regras Iniciais de
-                    Entrada
+                    <span class="step-number">1</span> Exclusão da Regra Pública
                   </h5>
                   <p class="text-white-50">
-                    Verificação inicial das regras de entrada do Security Group
-                    do AppServer.
+                    <strong>Onde ir:</strong> EC2 > Grupos de Segurança >
+                    AppServerSG.
+                  </p>
+                  <p class="text-white-50">
+                    <strong>Ação Realizada:</strong> Exclusão da regra de
+                    entrada HTTP para 0.0.0.0/0.
+                  </p>
+                  <p class="text-white-50">
+                    <strong>Explicação Técnica:</strong> Aplicação do princípio
+                    de "Zero Trust" externo. O AppServer passa a ser invisível
+                    para varreduras públicas, permitindo acesso apenas via
+                    tráfego controlado.
                   </p>
 
                   <div class="lab-image-container">
                     <img
-                      src="/images/relatorio/05_SecurityGroup_Inbound_Rules_Initial.png"
-                      alt="Regras iniciais de entrada"
+                      src="/images/relatorio/04_EC2_AppServerSG_Public_Access_Removed.png"
+                      alt="Acesso público removido do AppServer"
                       loading="lazy"
                     />
                     <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 9: AppServerSG -
-                      Regras de entrada iniciais (porta 80 liberada para
-                      qualquer origem)
-                    </div>
-                  </div>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">2</span> Interface de Edição de
-                    Regras
-                  </h5>
-                  <p class="text-white-50">
-                    Acessando a interface de edição das regras de entrada para
-                    configurar restrições.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/06_SecurityGroup_Edit_Interface.png"
-                      alt="Interface de edição de regras"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 10: Interface de
-                      edição de regras de entrada do Security Group
-                    </div>
-                  </div>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">3</span> Identificação do ID do
-                    ProxySG1
-                  </h5>
-                  <p class="text-white-50">
-                    Verificando o ID do Security Group do primeiro proxy para
-                    configurar a origem restrita.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/06_SecurityGroup_Proxy1_ID_Check.png"
-                      alt="ID do ProxySG1"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 11: Identificação do
-                      ID do Security Group do ProxyServer1
-                      (sg-08e81a1b52c955db9)
-                    </div>
-                  </div>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">4</span> Identificação do ID do
-                    ProxySG2
-                  </h5>
-                  <p class="text-white-50">
-                    Verificando o ID do Security Group do segundo proxy.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/07_SecurityGroup_Proxy2_ID_Check.png"
-                      alt="ID do ProxySG2"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 12: Identificação do
-                      ID do Security Group do ProxyServer2
-                      (sg-0fdba46bc6559744b)
-                    </div>
-                  </div>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">5</span> O Desafio de Configuração
-                  </h5>
-                  <p class="text-white-50">
-                    Ao tentar restringir o acesso, identificamos que a console
-                    AWS exige a validação dos IDs através de lista suspensa.
-                    Inserção manual resulta em erro.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/08_Troubleshooting_SG_Selection_Error.png"
-                      alt="Erro de validação"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 13: Erro de validação
-                      ao tentar inserir ID de Security Group manualmente
+                      <i class="fas fa-camera"></i> Figura 4: AppServerSG -
+                      Regra HTTP pública removida com sucesso
                     </div>
                   </div>
 
-                  <div class="alert-obstacle mt-2">
+                  <div class="alert-obstacle mt-3">
                     <i class="fas fa-exclamation-triangle"></i>
-                    <strong>Obstáculo #1:</strong> A console AWS não aceita
-                    inserção manual de Security Group IDs - é necessário
-                    selecionar da lista suspensa.
-                  </div>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">6</span> A Solução: Seleção via
-                    Lista Suspensa
-                  </h5>
-                  <p class="text-white-50">
-                    Configuramos a origem como "Personalizado" e selecionamos os
-                    IDs diretamente da lista suspensa.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/09_SecurityGroup_AppServer_Custom_Source_Fix.png"
-                      alt="Correção com seleção da lista"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 14: Configuração
-                      correta - seleção dos Security Group IDs via lista
-                      suspensa
-                    </div>
-                  </div>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">7</span> Regras Aplicadas com
-                    Sucesso
-                  </h5>
-                  <p class="text-white-50">
-                    As regras foram aplicadas com sucesso. Agora apenas
-                    instâncias dos grupos ProxySG podem acessar a porta 80 do
-                    AppServer.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/10_SecurityGroup_AppServer_Rules_Applied_Success.png"
-                      alt="Regras aplicadas com sucesso"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 15: AppServerSG -
-                      Regras de entrada configuradas com origem restrita aos
-                      Proxies
-                    </div>
-                  </div>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">8</span> Validação da Regra SSH
-                  </h5>
-                  <p class="text-white-50">
-                    Verificando a configuração da regra SSH para acesso ao
-                    Bastion Host.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/security-group-ssh.png"
-                      alt="Regra SSH configurada"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 16: Configuração da
-                      regra SSH para acesso ao Bastion Host
-                    </div>
-                  </div>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">9</span> Regras do AppServer
-                    (Visão Consolidada)
-                  </h5>
-                  <p class="text-white-50">
-                    Visão geral de todas as regras configuradas no AppServer.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/regras-appserver.png"
-                      alt="Regras consolidadas do AppServer"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 17: Visão consolidada
-                      das regras de segurança do AppServer
-                    </div>
-                  </div>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">10</span> Inventário de Security
-                    Groups
-                  </h5>
-                  <p class="text-white-50">
-                    Lista completa de todos os Security Groups configurados na
-                    VPC.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/11_VPC_SecurityGroups_Inventory_List.png"
-                      alt="Inventário de Security Groups"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 18: Inventário
-                      completo de Security Groups da VPC
-                    </div>
-                  </div>
-                </div>
-
-                <div class="alert-success mt-3">
-                  <i class="fas fa-check-circle"></i>
-                  <strong>Resultado:</strong> Segurança East-West implementada -
-                  AppServer responde apenas a requisições dos proxies
-                  autorizados.
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- TASK 4: Validação de Conectividade de Saída -->
-          <section id="task4" class="mb-5 animate-on-scroll">
-            <div class="card">
-              <div class="card-body">
-                <h2 class="card-title">
-                  <i class="fas fa-sign-out-alt"></i>
-                  Task 4: Validação de Regras de Saída (Outbound)
-                </h2>
-
-                <p class="text-white-50">
-                  Para concluir o ciclo de comunicação entre as camadas,
-                  validamos se os grupos de segurança dos Proxies permitem o
-                  envio de tráfego.
-                </p>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">1</span> Verificação das Regras de
-                    Saída do ProxySG
-                  </h5>
-                  <p class="text-white-50">
-                    No modelo de Security Groups da AWS, o tráfego é stateful,
-                    mas garantir que as regras de saída não bloqueiem o tráfego
-                    de resposta é uma boa prática de auditoria.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/12_ProxySG_Outbound_Rules_Check.png"
-                      alt="Regras de saída do ProxySG"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 19: ProxySG -
-                      Verificação das regras de saída (outbound)
-                    </div>
+                    <strong>Princípio aplicado:</strong> Zero Trust externo - o
+                    AppServer agora é invisível para varreduras públicas.
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- TASK 5: Mapeamento de NACL -->
+          <!-- TASK 5: Relação de Confiança (Security Group Chaining) -->
           <section id="task5" class="mb-5 animate-on-scroll">
             <div class="card">
               <div class="card-body">
                 <h2 class="card-title">
-                  <i class="fas fa-map"></i>
-                  Task 5: Mapeamento e Associação de NACL
+                  <i class="fas fa-link"></i>
+                  Task 5: Relação de Confiança (Security Group Chaining)
                 </h2>
 
                 <p class="text-white-50">
-                  Para garantir que as políticas de segurança de rede sejam
-                  aplicadas corretamente ao servidor de aplicação, realizamos o
-                  mapeamento das Associações de Sub-rede.
+                  <strong>Objetivo:</strong> Permitir comunicação apenas entre
+                  camadas autorizadas (Proxy -> App).
                 </p>
 
                 <div class="step mt-4">
                   <h5>
-                    <span class="step-number">1</span> Inventário de NACLs
+                    <span class="step-number">1</span> Configuração da Origem
+                    por Security Group
                   </h5>
                   <p class="text-white-50">
-                    Lista completa das Network ACLs configuradas na VPC.
+                    <strong>Onde ir:</strong> AppServerSG > Editar regras de
+                    entrada.
+                  </p>
+                  <p class="text-white-50">
+                    <strong>Ação Realizada:</strong> Adicionada regra HTTP (80)
+                    tendo como Origem o ID do Security Group dos Proxies
+                    (sg-0c6b5965071a066a8).
+                  </p>
+                  <p class="text-white-50">
+                    <strong>Explicação Técnica:</strong> Em vez de liberar IPs,
+                    liberamos o "grupo". Isso cria um funil de segurança
+                    dinâmico onde apenas instâncias com a identidade de "Proxy"
+                    podem falar com o AppServer.
                   </p>
 
                   <div class="lab-image-container">
                     <img
-                      src="/images/relatorio/13_VPC_NACL_Inventory_List.png"
-                      alt="Inventário de NACLs"
+                      src="/images/relatorio/05_AppServerSG_Validated_ProxySG_Reference.png"
+                      alt="Validação da referência ao ProxySG"
                       loading="lazy"
                     />
                     <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 20: Inventário de
-                      Network ACLs da VPC
+                      <i class="fas fa-camera"></i> Figura 5: Validação da
+                      referência ao Security Group dos Proxies
                     </div>
                   </div>
-                </div>
 
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">2</span> Inventário Adicional de
-                    NACLs
-                  </h5>
-                  <p class="text-white-50">
-                    Visão alternativa do inventário de NACLs.
-                  </p>
-
-                  <div class="lab-image-container">
+                  <div class="lab-image-container mt-3">
                     <img
-                      src="/images/relatorio/3_VPC_NetworkACL_Inventory_List.png"
-                      alt="Inventário de NACLs alternativo"
+                      src="/images/relatorio/06_AppServerSG_Final_Rules_Applied.png"
+                      alt="Regras finais do AppServerSG"
                       loading="lazy"
                     />
                     <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 21: Inventário de
-                      Network ACLs - visão alternativa
+                      <i class="fas fa-camera"></i> Figura 6: AppServerSG -
+                      Regras finais aplicadas com origem nos Security Groups dos
+                      Proxies
                     </div>
                   </div>
-                </div>
 
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">3</span> Associações de Sub-rede
-                    da NACL
-                  </h5>
-                  <p class="text-white-50">
-                    Selecionamos a NACL e verificamos a aba "Associações de
-                    sub-rede" para confirmar que esta lista gerencia o tráfego
-                    da PrivateSubnet.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/14_VPC_NACL_Subnet_Association_Private.png"
-                      alt="Associações da NACL"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 22: NACL -
-                      Associações de sub-rede confirmando gerenciamento da
-                      PrivateSubnet
-                    </div>
+                  <div class="alert-tip mt-3">
+                    <i class="fas fa-lightbulb"></i>
+                    <strong>Conceito chave:</strong> Security Group Chaining
+                    permite uma relação de confiança dinâmica - novos proxies
+                    adicionados ao grupo automaticamente ganham acesso.
                   </div>
-                </div>
-
-                <div class="alert-tip mt-3">
-                  <i class="fas fa-lightbulb"></i>
-                  <strong>Conceito chave:</strong> Diferente dos Security
-                  Groups, qualquer regra criada nesta NACL afetará todos os
-                  recursos dentro da PrivateSubnet, independentemente da
-                  instância.
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- TASK 6: Implementação do Bastion Host -->
-          <section id="task6" class="mb-5 animate-on-scroll">
-            <div class="card">
-              <div class="card-body">
-                <h2 class="card-title">
-                  <i class="fas fa-server"></i>
-                  Task 6: Provisionamento do Bastion Host
-                </h2>
-
-                <p class="text-white-50">
-                  Devido à ausência de um grupo de segurança pré-configurado
-                  para acesso administrativo, procedemos com a criação manual do
-                  BastionSG.
-                </p>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">1</span> Criação do BastionSG -
-                    Parâmetros
-                  </h5>
-                  <p class="text-white-50">
-                    Criação do Security Group BastionSG na LabVPC com foco em
-                    acesso administrativo via porta 22 (SSH).
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/15_VPC_Creating_BastionSG_Parameters.png"
-                      alt="Criação do BastionSG"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 23: Criação do
-                      BastionSG - Definição de parâmetros e regras de entrada
-                    </div>
-                  </div>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">2</span> BastionSG Criado com
-                    Sucesso
-                  </h5>
-                  <p class="text-white-50">
-                    Recurso sg-046fad1c42cf7b70a criado e disponível para
-                    associação.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/16_VPC_BastionSG_Created_Success.png"
-                      alt="BastionSG criado"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 24: BastionSG criado
-                      com sucesso - ID: sg-046fad1c42cf7b70a
-                    </div>
-                  </div>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">3</span> Associação ao
-                    ProxyServer1
-                  </h5>
-                  <p class="text-white-50">
-                    O grupo foi anexado ao ProxyServer1 através do console de
-                    gerenciamento de segurança da EC2.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/17_EC2_Proxy1_Dual_Identity_Bastion_Proxy.png"
-                      alt="ProxyServer1 com identidade dupla"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 25: ProxyServer1
-                      agora com identidade dupla - Proxy (HTTP) e Bastion Host
-                      (SSH)
-                    </div>
-                  </div>
-                </div>
-
-                <div class="alert-success mt-3">
-                  <i class="fas fa-check-circle"></i>
-                  <strong>Arquitetura resultante:</strong> ProxyServer1 possui
-                  configuração de segurança composta, permitindo tanto tráfego
-                  HTTP (aplicação) quanto SSH (gestão).
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- TASK 7: O Desafio do SSH Jump -->
+          <!-- TASK 7: Acesso Administrativo via Bastion Host -->
           <section id="task7" class="mb-5 animate-on-scroll">
             <div class="card">
               <div class="card-body">
                 <h2 class="card-title">
                   <i class="fas fa-terminal"></i>
-                  Task 7: O Desafio do Acesso Lateral (SSH Jump)
+                  Task 7: Acesso Administrativo via Bastion Host (Jump Box)
                 </h2>
 
                 <p class="text-white-50">
-                  A prova de fogo da conectividade interna - acesso ao AppServer
-                  através do Bastion Host.
+                  <strong>Objetivo:</strong> Acessar o terminal de instâncias
+                  privadas de forma segura.
                 </p>
 
                 <div class="step mt-4">
                   <h5>
-                    <span class="step-number">1</span> Acesso ao Bastion via
-                    Terminal Local
+                    <span class="step-number">1</span> Configuração do Bastion
+                    Host
                   </h5>
                   <p class="text-white-50">
-                    Primeiro passo: conectar ao Bastion Host (ProxyServer1) via
-                    SSH.
+                    <strong>Ação Realizada:</strong> Renomeação da instância
+                    para Bastion e criação do BastionSG permitindo SSH (22).
+                    Realizado o salto SSH usando Agent Forwarding.
                   </p>
 
                   <div class="lab-image-container">
                     <img
-                      src="/images/relatorio/18_SSH_Access_Bastion_Success.png"
-                      alt="Acesso SSH ao Bastion"
+                      src="/images/relatorio/07_AppServerSG_SSH_Source_Bastion.png"
+                      alt="Regra SSH com origem no Bastion"
                       loading="lazy"
                     />
                     <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 26: Acesso SSH ao
-                      Bastion Host (ProxyServer1) bem-sucedido
+                      <i class="fas fa-camera"></i> Figura 7: AppServerSG -
+                      Regra SSH liberada apenas para o Security Group do Bastion
                     </div>
                   </div>
-                </div>
 
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">2</span> Tentativa de Salto para o
-                    AppServer
+                  <h5 class="mt-4">
+                    <span class="step-number">2</span> Comandos de Acesso
                   </h5>
                   <p class="text-white-50">
-                    Tentamos o salto (jump) para o AppServer (10.0.1.94) -
-                    identificamos um erro de Permission Denied.
+                    <strong>No Terminal:</strong> Executado
+                    <code>ssh -A ec2-user@BastionIP</code> e depois
+                    <code>ssh ec2-user@AppServerIP</code>.
                   </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/19_SSH_Jump_AppServer_Permission_Error.png"
-                      alt="Erro de permissão no SSH Jump"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 27: Erro de
-                      Permission Denied ao tentar SSH Jump para AppServer
-                      (10.0.1.94)
-                    </div>
-                  </div>
-
-                  <div class="alert-obstacle mt-2">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <strong>Obstáculo #2:</strong> Falta da chave privada no
-                    segundo salto - o Bastion não tem a chave para acessar o
+                  <p class="text-white-50">
+                    <strong>Comando de Prova:</strong>
+                    <code>touch newfile.txt</code> criado no diretório raiz do
                     AppServer.
-                  </div>
-
-                  <pre><code>ssh -i chave.pem ec2-user@10.0.1.94</code></pre>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">3</span> Solução: Transferência da
-                    Chave
-                  </h5>
-                  <p class="text-white-50">
-                    Necessário transferir a chave privada para o Bastion ou usar
-                    SSH Agent Forwarding.
                   </p>
 
                   <div class="lab-image-container">
                     <img
-                      src="/images/relatorio/chave-corrigida.png"
-                      alt="Chave PEM corrigida"
+                      src="/images/relatorio/07_Terminal_SSH_Success_AppServer.png"
+                      alt="SSH bem-sucedido no AppServer"
                       loading="lazy"
                     />
                     <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 28: Chave PEM
-                      corrigida e preparada para transferência
+                      <i class="fas fa-camera"></i> Figura 8: Terminal - Acesso
+                      SSH bem-sucedido ao AppServer via Bastion Host
                     </div>
                   </div>
-                </div>
 
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">4</span> Verificação da VPC
-                    Correta
-                  </h5>
-                  <p class="text-white-50">
-                    Validamos se as instâncias estão na mesma VPC para permitir
-                    comunicação.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/vpc-correta.png"
-                      alt="Verificação da VPC"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 29: Verificação -
-                      instâncias na mesma VPC (vpc-0a8e1f2c3d4e5f678)
-                    </div>
+                  <div class="alert-tip mt-3">
+                    <i class="fas fa-lightbulb"></i>
+                    <strong>Explicação Técnica:</strong> O Bastion Host atua
+                    como um portão controlado. O uso de Agent Forwarding evita o
+                    armazenamento de chaves .pem dentro de servidores públicos,
+                    uma melhor prática de segurança.
                   </div>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">5</span> Verificação do Console
-                    EC2
-                  </h5>
-                  <p class="text-white-50">
-                    Console EC2 mostrando as máquinas configuradas.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/console-ec2-maquinas.png"
-                      alt="Console EC2"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 30: Console EC2 -
-                      visão geral das instâncias
-                    </div>
-                  </div>
-                </div>
-
-                <div class="alert-tip mt-3">
-                  <i class="fas fa-lightbulb"></i>
-                  <strong>Solução:</strong> Use SSH Agent Forwarding:
-                  <code>ssh -A -i bastion.pem ec2-user@bastion-ip</code> e
-                  depois <code>ssh ec2-user@10.0.1.94</code>
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- TASK 8: Validação Web -->
+          <!-- TASK 8: AWS Session Manager -->
           <section id="task8" class="mb-5 animate-on-scroll">
             <div class="card">
               <div class="card-body">
                 <h2 class="card-title">
                   <i class="fas fa-globe"></i>
-                  Task 8: Finalização - Validação Web
+                  Task 8: Gestão de Sistemas via AWS Session Manager
                 </h2>
 
                 <p class="text-white-50">
-                  Concluímos o ciclo instalando o serviço web e validando o
-                  acesso ao AppServer.
+                  <strong>Objetivo:</strong> Gerenciar servidores sem
+                  necessidade de abrir portas de rede (Portless Access).
                 </p>
 
                 <div class="step mt-4">
                   <h5>
-                    <span class="step-number">1</span> Instalação do Apache e
-                    Validação
+                    <span class="step-number">1</span> Acesso via Session
+                    Manager
                   </h5>
                   <p class="text-white-50">
-                    Via comando remoto SSH, instalamos o httpd (Apache) no
-                    servidor privado e validamos com curl localhost.
+                    <strong>Onde ir:</strong> Console EC2 > AppServer > Conectar
+                    > Session Manager.
+                  </p>
+                  <p class="text-white-50">
+                    <strong>Ação Realizada:</strong> Alteração do arquivo
+                    index.html via terminal web com o comando
+                    <code>sudo sed</code>.
+                  </p>
+                  <p class="text-white-50">
+                    <strong>Explicação Técnica:</strong> O Session Manager
+                    utiliza o agente SSM e permissões IAM para prover acesso ao
+                    terminal via HTTPS (443), eliminando a necessidade de
+                    gerenciar chaves SSH ou abrir a porta 22 na rede.
                   </p>
 
                   <div class="lab-image-container">
                     <img
-                      src="/images/relatorio/20_Final_Task8_Web_Success.png"
-                      alt="Validação web bem-sucedida"
+                      src="/images/relatorio/08_SessionManager_Webpage_Edit_Success.png"
+                      alt="Edição via Session Manager"
                       loading="lazy"
                     />
                     <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 31: Validação web
-                      bem-sucedida - servidor privado respondendo com mensagem
-                      personalizada
+                      <i class="fas fa-camera"></i> Figura 9: Session Manager -
+                      Edição bem-sucedida do arquivo index.html via terminal web
                     </div>
                   </div>
 
-                  <pre><code>curl localhost</code></pre>
-                </div>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">2</span> Terminal - Acesso Final
-                  </h5>
-                  <p class="text-white-50">
-                    Visão do terminal com o acesso final ao AppServer.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/terminal-final.png"
-                      alt="Terminal com acesso final"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 32: Terminal - acesso
-                      final ao AppServer via Bastion Host
-                    </div>
+                  <div class="alert-success mt-3">
+                    <i class="fas fa-check-circle"></i>
+                    <strong>Resultado:</strong> Acesso Portless implementado -
+                    gerenciamento do servidor sem abrir portas de rede.
                   </div>
-                </div>
-
-                <div class="alert-success mt-3">
-                  <i class="fas fa-check-circle"></i>
-                  <strong>Resultado final:</strong> Sucesso! Servidor privado
-                  (AppServer) acessível e servindo conteúdo web através do
-                  Bastion Host.
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- Resumo de Troubleshooting -->
+          <!-- Resumo e Conclusão -->
           <section class="mt-5 animate-on-scroll">
             <div class="card">
               <div class="card-body">
                 <h2 class="card-title">
-                  <i class="fas fa-clipboard-check"></i>
-                  Resumo de Troubleshooting: 6 Obstáculos Superados
+                  <i class="fas fa-trophy"></i>
+                  Conclusão do Lab: Score 40/40
                 </h2>
+
+                <p class="text-white-50">
+                  Este escopo documenta a jornada de um ambiente vulnerável para
+                  uma arquitetura multicamadas (Multi-tier) resiliente, com
+                  controles de segurança Stateful (Security Groups) e Stateless
+                  (NACLs) totalmente validados.
+                </p>
 
                 <div class="row mt-4">
                   <div class="col-md-6">
-                    <div class="alert-obstacle mb-3">
-                      <i class="fas fa-times-circle"></i>
-                      <strong>Obstáculo 1:</strong> Validação de Security Group
-                      IDs - solução: seleção via lista suspensa
-                    </div>
-                    <div class="alert-obstacle mb-3">
-                      <i class="fas fa-times-circle"></i>
-                      <strong>Obstáculo 2:</strong> Falta da chave privada no
-                      segundo salto - solução: SSH Agent Forwarding
-                    </div>
-                    <div class="alert-obstacle mb-3">
-                      <i class="fas fa-times-circle"></i>
-                      <strong>Obstáculo 3:</strong> Tabela de rotas com tag
-                      'changeme' - solução: padronização de nomenclatura
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="alert-obstacle mb-3">
-                      <i class="fas fa-times-circle"></i>
-                      <strong>Obstáculo 4:</strong> Timeout SSH - solução:
-                      liberação da porta 22 no Security Group
-                    </div>
-                    <div class="alert-obstacle mb-3">
-                      <i class="fas fa-times-circle"></i>
-                      <strong>Obstáculo 5:</strong> VPC incorreta - solução:
-                      verificação e correção do ambiente
+                    <div class="alert-success mb-3">
+                      <i class="fas fa-check-circle"></i>
+                      <strong>✓ Task 1:</strong> Governança de rotas
                     </div>
                     <div class="alert-success mb-3">
                       <i class="fas fa-check-circle"></i>
-                      <strong>Obstáculo 6:</strong> ICMP bloqueado - solução:
-                      liberação no Security Group
+                      <strong>✓ Task 2:</strong> Perímetro de borda
+                    </div>
+                    <div class="alert-success mb-3">
+                      <i class="fas fa-check-circle"></i>
+                      <strong>✓ Task 3 & 4:</strong> Isolamento AppServer
+                    </div>
+                    <div class="alert-success mb-3">
+                      <i class="fas fa-check-circle"></i>
+                      <strong>✓ Task 5:</strong> Security Group Chaining
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="alert-success mb-3">
+                      <i class="fas fa-check-circle"></i>
+                      <strong>✓ Task 7:</strong> Bastion Host (Jump Box)
+                    </div>
+                    <div class="alert-success mb-3">
+                      <i class="fas fa-check-circle"></i>
+                      <strong>✓ Task 8:</strong> Session Manager
+                    </div>
+                    <div class="alert-tip mb-3">
+                      <i class="fas fa-star"></i>
+                      <strong>Score Final:</strong> 40/40 - Laboratório
+                      concluído com sucesso!
                     </div>
                   </div>
                 </div>
 
                 <div class="alert-tip mt-3">
-                  <i class="fas fa-trophy"></i>
-                  <strong>Arquitetura final:</strong> VPC segmentada com
-                  sub-rede privada, Bastion Host para acesso administrativo,
-                  Security Groups com privilégio mínimo, NACL em camada de
-                  sub-rede e validação web bem-sucedida.
+                  <i class="fas fa-info-circle"></i>
+                  <strong>Arquitetura final:</strong> Ambiente vulnerável
+                  transformado em arquitetura multicamadas (Multi-tier)
+                  resiliente, com controles Stateful (Security Groups) e
+                  Stateless (NACLs) totalmente validados.
                 </div>
               </div>
             </div>
@@ -1623,11 +1005,13 @@
               <i class="fas fa-shield-halos text-info"></i> CyberSec Nuvem
             </h5>
             <p class="text-white-50">
-              Tutorial Master Architect - Laboratório AWS <br />
+              Arquitetura de Redes Segura na AWS - Laboratório Master Architect
+              <br />
               Curso de Cibersegurança na Nuvem - SENAI
             </p>
             <p class="text-white-50 small">
-              <i class="fas fa-image me-2"></i>36 capturas de tela documentadas
+              <i class="fas fa-image me-2"></i>12 capturas de tela documentadas
+              | Score: 40/40
             </p>
           </div>
           <div class="col-md-6 text-md-end">
