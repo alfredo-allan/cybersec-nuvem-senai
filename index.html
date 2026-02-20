@@ -95,6 +95,10 @@
           <a class="nav-link text-white" href="#fixacao"
             ><i class="fas fa-brain me-1"></i>Fixação</a
           >
+          <!-- NOVO LINK: Laboratórios AWS (âncora pra nova seção) -->
+          <a class="nav-link text-white" href="#laboratorios-aws"
+            ><i class="fab fa-aws me-1"></i>Laboratórios AWS</a
+          >
           <a class="nav-link text-white" href="/pages/lab-aws.html"
             ><i class="fas fa-flask me-1"></i>Lab AWS</a
           >
@@ -318,7 +322,559 @@
         </div>
       </div>
     </section>
+    <!-- ===== NOVA SEÇÃO: LABORATÓRIOS AWS EXPLICADO ===== -->
+    <section id="laboratorios-aws" class="container my-5">
+      <!-- Cabeçalho da seção -->
+      <div class="text-center mb-5">
+        <span class="badge bg-info text-dark mb-3">
+          <i class="fas fa-flask me-1"></i> Mão na Massa
+        </span>
+        <h3 class="display-6 fw-bold text-white mb-3">
+          <i class="fab fa-aws me-2"></i>Laboratórios AWS
+        </h3>
+        <p class="lead text-white-50 col-lg-8 mx-auto">
+          Dois laboratórios práticos que fizemos na AWS explicados em português
+          claro - sem termos técnicos complicados. Entenda cada conceito como se
+          fosse a primeira vez!
+        </p>
+      </div>
 
+      <!-- LAB 1: S3 e IAM (Políticas de Acesso) -->
+      <div class="row mb-5">
+        <div class="col-12">
+          <div
+            class="card bg-dark text-white border-secondary animate__animated animate__fadeInLeft"
+          >
+            <div class="card-body">
+              <!-- Título com ícone -->
+              <div class="d-flex align-items-center mb-4">
+                <div class="me-3">
+                  <i class="fas fa-bucket fa-3x text-info"></i>
+                </div>
+                <div>
+                  <h4 class="text-white mb-1">
+                    Laboratório 1: Protegendo arquivos na nuvem
+                  </h4>
+                  <p class="text-white-50 mb-0">
+                    <i class="fas fa-tag me-1"></i>Políticas do IAM e buckets S3
+                  </p>
+                </div>
+              </div>
+
+              <!-- Cards explicativos lado a lado -->
+              <div class="row g-4">
+                <!-- Card: O que é bucket? -->
+                <div class="col-md-4">
+                  <div
+                    class="bg-black-50 p-3 rounded border border-secondary h-100"
+                  >
+                    <h5 class="text-info">
+                      <i class="fas fa-box me-2"></i>Bucket S3
+                    </h5>
+                    <p class="text-white-50 small mb-2">
+                      <span class="badge bg-secondary me-1">Tradução:</span>
+                      <strong>"Pasta na nuvem"</strong>
+                    </p>
+                    <p class="text-white-50">
+                      Imagine que é um drive virtual (como Google Drive ou
+                      OneDrive), mas criado pra guardar arquivos de sistemas,
+                      não fotos de férias. Pode ser público (qualquer um vê) ou
+                      privado (só quem tem senha).
+                    </p>
+                    <div
+                      class="alert alert-info bg-info bg-opacity-10 text-info border-info p-2 small mt-2"
+                    >
+                      <i class="fas fa-lightbulb me-1"></i>
+                      No laboratório: criamos 3 pastas: bucket1, bucket2 e
+                      bucket3
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card: O que é IAM/Perfil? -->
+                <div class="col-md-4">
+                  <div
+                    class="bg-black-50 p-3 rounded border border-secondary h-100"
+                  >
+                    <h5 class="text-info">
+                      <i class="fas fa-id-card me-2"></i>Perfil IAM (Role)
+                    </h5>
+                    <p class="text-white-50 small mb-2">
+                      <span class="badge bg-secondary me-1">Tradução:</span>
+                      <strong>"Crachá de acesso temporário"</strong>
+                    </p>
+                    <p class="text-white-50">
+                      Sabe quando você vai num prédio e te dão um crachá de
+                      visitante com acesso só ao 3º andar? O perfil IAM é
+                      exatamente isso: um crachá digital que dá permissões
+                      específicas por tempo limitado.
+                    </p>
+                    <div
+                      class="alert alert-info bg-info bg-opacity-10 text-info border-info p-2 small mt-2"
+                    >
+                      <i class="fas fa-lightbulb me-1"></i>
+                      No laboratório: "vestimos" o crachá
+                      <strong>BucketsAccessRole</strong>
+                      que só deixava acessar o bucket1
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card: O que são Políticas? -->
+                <div class="col-md-4">
+                  <div
+                    class="bg-black-50 p-3 rounded border border-secondary h-100"
+                  >
+                    <h5 class="text-info">
+                      <i class="fas fa-file-code me-2"></i>Políticas (JSON)
+                    </h5>
+                    <p class="text-white-50 small mb-2">
+                      <span class="badge bg-secondary me-1">Tradução:</span>
+                      <strong>"Lista de regras em formato de papel"</strong>
+                    </p>
+                    <p class="text-white-50">
+                      É um arquivo de texto com regras escritas que dizem: "quem
+                      pode fazer o quê em qual lugar". Tipo um manual de
+                      instruções pro computador entender as permissões.
+                    </p>
+                    <div class="bg-black p-2 rounded mt-2">
+                      <code class="small text-info">
+                        { "Effect": "Allow", "Action": "s3:GetObject",
+                        "Resource": "bucket1/*" }
+                      </code>
+                    </div>
+                    <p class="text-white-50 small mt-2 mb-0">
+                      <i class="fas fa-arrow-right text-info me-1"></i>
+                      Traduzindo: "Permitir BAIXAR arquivos da pasta bucket1"
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Explicação passo a passo do que rolou -->
+              <div class="mt-4 p-3 bg-black-50 rounded border border-secondary">
+                <h5 class="text-white">
+                  <i class="fas fa-clipboard-list text-info me-2"></i>O que
+                  aprendemos na prática:
+                </h5>
+                <div class="row">
+                  <div class="col-md-6">
+                    <ul class="list-unstyled text-white-50">
+                      <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <strong>1. Vestir o crachá certo:</strong> Quando
+                        assumimos o perfil "BucketsAccessRole", ganhamos acesso
+                        só ao bucket1
+                      </li>
+                      <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <strong>2. Testar permissões:</strong> Conseguimos
+                        BAIXAR arquivos (GetObject), mas não conseguimos ENVIAR
+                        (PutObject)
+                      </li>
+                      <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <strong>3. Trocar de crachá:</strong> Ao voltar pro
+                        usuário normal, perdemos acesso - provando que as
+                        permissões são do crachá, não da pessoa
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6">
+                    <ul class="list-unstyled text-white-50">
+                      <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <strong>4. Analisar as regras:</strong> Vimos o arquivo
+                        JSON que liberava bucket1, mas não bucket2 e bucket3
+                      </li>
+                      <li class="mb-2">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        <strong>5. Relação de confiança:</strong> Entendemos que
+                        o sistema confia no usuário "devuser" pra entregar o
+                        crachá
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Dica final -->
+                <div
+                  class="alert alert-warning bg-warning bg-opacity-10 text-warning border-warning mt-3 mb-0"
+                >
+                  <i class="fas fa-lightbulb me-2"></i>
+                  <strong>Resumo pra nunca esquecer:</strong> O laboratório
+                  mostrou que <strong>NÃO é a pessoa</strong> que tem acesso,
+                  mas sim o <strong>CRACHÁ que ela está usando</strong>. Trocar
+                  o crachá = trocar as permissões!
+                </div>
+              </div>
+
+              <!-- Botão pra ver laboratório completo -->
+              <div class="text-end mt-3">
+                <a
+                  href="/pages/lab-aws.html"
+                  class="btn btn-outline-info btn-sm"
+                >
+                  Ver laboratório completo
+                  <i class="fas fa-arrow-right ms-1"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAB 2: Arquitetura de Redes (VPC, Security Groups, Bastion) -->
+      <div class="row">
+        <div class="col-12">
+          <div
+            class="card bg-dark text-white border-secondary animate__animated animate__fadeInRight"
+          >
+            <div class="card-body">
+              <!-- Título com ícone -->
+              <div class="d-flex align-items-center mb-4">
+                <div class="me-3">
+                  <i class="fas fa-project-diagram fa-3x text-info"></i>
+                </div>
+                <div>
+                  <h4 class="text-white mb-1">
+                    Laboratório 2: Construindo um bairro seguro na nuvem
+                  </h4>
+                  <p class="text-white-50 mb-0">
+                    <i class="fas fa-tag me-1"></i>VPC, Security Groups, Bastion
+                    Host e Session Manager
+                  </p>
+                </div>
+              </div>
+
+              <!-- Explicação da analogia do bairro -->
+              <div
+                class="alert alert-info bg-info bg-opacity-10 text-info border-info mb-4"
+              >
+                <i class="fas fa-city me-2"></i>
+                <strong>Bora usar uma analogia:</strong> Imagine que a AWS é uma
+                cidade enorme. A <strong>VPC</strong> é um bairro particular que
+                você constrói. Dentro desse bairro, você cria ruas (sub-redes),
+                portarias (Bastion Host) e regras de acesso (Security Groups).
+              </div>
+
+              <!-- Cards de conceitos em grid -->
+              <div class="row g-3 mb-4">
+                <!-- VPC -->
+                <div class="col-md-4 col-lg-3">
+                  <div
+                    class="bg-black-50 p-2 rounded border border-secondary text-center h-100"
+                  >
+                    <i class="fas fa-city fa-2x text-info mb-2"></i>
+                    <h6 class="text-white mb-1">VPC</h6>
+                    <p class="text-white-50 small mb-0">"Bairro privado"</p>
+                  </div>
+                </div>
+                <!-- Sub-redes -->
+                <div class="col-md-4 col-lg-3">
+                  <div
+                    class="bg-black-50 p-2 rounded border border-secondary text-center h-100"
+                  >
+                    <i class="fas fa-road fa-2x text-info mb-2"></i>
+                    <h6 class="text-white mb-1">Sub-redes</h6>
+                    <p class="text-white-50 small mb-0">"Ruas do bairro"</p>
+                  </div>
+                </div>
+                <!-- Internet Gateway -->
+                <div class="col-md-4 col-lg-3">
+                  <div
+                    class="bg-black-50 p-2 rounded border border-secondary text-center h-100"
+                  >
+                    <i class="fas fa-door-open fa-2x text-info mb-2"></i>
+                    <h6 class="text-white mb-1">Internet Gateway</h6>
+                    <p class="text-white-50 small mb-0">"Portão de entrada"</p>
+                  </div>
+                </div>
+                <!-- Security Group -->
+                <div class="col-md-4 col-lg-3">
+                  <div
+                    class="bg-black-50 p-2 rounded border border-secondary text-center h-100"
+                  >
+                    <i class="fas fa-shield-alt fa-2x text-info mb-2"></i>
+                    <h6 class="text-white mb-1">Security Group</h6>
+                    <p class="text-white-50 small mb-0">"Segurança do APTO"</p>
+                  </div>
+                </div>
+                <!-- Bastion Host -->
+                <div class="col-md-4 col-lg-3">
+                  <div
+                    class="bg-black-50 p-2 rounded border border-secondary text-center h-100"
+                  >
+                    <i class="fas fa-concierge-bell fa-2x text-info mb-2"></i>
+                    <h6 class="text-white mb-1">Bastion Host</h6>
+                    <p class="text-white-50 small mb-0">"Portaria do prédio"</p>
+                  </div>
+                </div>
+                <!-- Session Manager -->
+                <div class="col-md-4 col-lg-3">
+                  <div
+                    class="bg-black-50 p-2 rounded border border-secondary text-center h-100"
+                  >
+                    <i class="fas fa-satellite-dish fa-2x text-info mb-2"></i>
+                    <h6 class="text-white mb-1">Session Manager</h6>
+                    <p class="text-white-50 small mb-0">
+                      "Controle remoto sem chave"
+                    </p>
+                  </div>
+                </div>
+                <!-- Zero Trust -->
+                <div class="col-md-4 col-lg-3">
+                  <div
+                    class="bg-black-50 p-2 rounded border border-secondary text-center h-100"
+                  >
+                    <i class="fas fa-user-secret fa-2x text-info mb-2"></i>
+                    <h6 class="text-white mb-1">Zero Trust</h6>
+                    <p class="text-white-50 small mb-0">"Desconfie de todos"</p>
+                  </div>
+                </div>
+                <!-- SG Chaining -->
+                <div class="col-md-4 col-lg-3">
+                  <div
+                    class="bg-black-50 p-2 rounded border border-secondary text-center h-100"
+                  >
+                    <i class="fas fa-link fa-2x text-info mb-2"></i>
+                    <h6 class="text-white mb-1">SG Chaining</h6>
+                    <p class="text-white-50 small mb-0">
+                      "Corrente de confiança"
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- O que fizemos - Passo a passo visual -->
+              <h5 class="text-white mt-4 mb-3">
+                <i class="fas fa-clipboard-list text-info me-2"></i>Passo a
+                passo do que fizemos:
+              </h5>
+
+              <div class="row g-3">
+                <!-- Task 1 -->
+                <div class="col-md-6">
+                  <div class="bg-black-50 p-3 rounded border border-secondary">
+                    <div class="d-flex">
+                      <span
+                        class="badge bg-info text-dark me-2"
+                        style="height: 24px"
+                        >1</span
+                      >
+                      <div>
+                        <h6 class="text-white mb-1">Organizamos as ruas</h6>
+                        <p class="text-white-50 small mb-0">
+                          Renomeamos a tabela de rotas pra "Private" - tipo
+                          colocar placa na rua pra não se perder
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Task 2 -->
+                <div class="col-md-6">
+                  <div class="bg-black-50 p-3 rounded border border-secondary">
+                    <div class="d-flex">
+                      <span
+                        class="badge bg-info text-dark me-2"
+                        style="height: 24px"
+                        >2</span
+                      >
+                      <div>
+                        <h6 class="text-white mb-1">Liberamos o portão</h6>
+                        <p class="text-white-50 small mb-0">
+                          Abrimos a porta 80 no Proxy pra internet conseguir
+                          entrar - tipo abrir o portão do prédio
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Task 3-4 -->
+                <div class="col-md-6">
+                  <div class="bg-black-50 p-3 rounded border border-secondary">
+                    <div class="d-flex">
+                      <span
+                        class="badge bg-info text-dark me-2"
+                        style="height: 24px"
+                        >3-4</span
+                      >
+                      <div>
+                        <h6 class="text-white mb-1">
+                          Escondemos o servidor de aplicação
+                        </h6>
+                        <p class="text-white-50 small mb-0">
+                          Tiramos o AppServer da internet - ninguém de fora
+                          consegue mais ver ele (Zero Trust)
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Task 5 -->
+                <div class="col-md-6">
+                  <div class="bg-black-50 p-3 rounded border border-secondary">
+                    <div class="d-flex">
+                      <span
+                        class="badge bg-info text-dark me-2"
+                        style="height: 24px"
+                        >5</span
+                      >
+                      <div>
+                        <h6 class="text-white mb-1">
+                          Criamos corrente de confiança
+                        </h6>
+                        <p class="text-white-50 small mb-0">
+                          Dissemos: "só quem tem o crachá de PROXY pode falar
+                          com o APPSERVER" (Security Group Chaining)
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Task 7 -->
+                <div class="col-md-6">
+                  <div class="bg-black-50 p-3 rounded border border-secondary">
+                    <div class="d-flex">
+                      <span
+                        class="badge bg-info text-dark me-2"
+                        style="height: 24px"
+                        >7</span
+                      >
+                      <div>
+                        <h6 class="text-white mb-1">
+                          Fizemos uma portaria (Bastion Host)
+                        </h6>
+                        <p class="text-white-50 small mb-0">
+                          Criamos um computador de entrada pra acessar os
+                          servidores internos - tipo recepção do prédio
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Task 8 -->
+                <div class="col-md-6">
+                  <div class="bg-black-50 p-3 rounded border border-secondary">
+                    <div class="d-flex">
+                      <span
+                        class="badge bg-info text-dark me-2"
+                        style="height: 24px"
+                        >8</span
+                      >
+                      <div>
+                        <h6 class="text-white mb-1">
+                          Usamos controle remoto sem chave
+                        </h6>
+                        <p class="text-white-50 small mb-0">
+                          Acessamos o servidor pelo Session Manager - sem
+                          precisar de chave SSH, só com permissão da AWS
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Resultado final -->
+              <div class="mt-4 p-3 bg-black-50 rounded border border-success">
+                <div class="d-flex">
+                  <i class="fas fa-trophy text-warning fa-2x me-3"></i>
+                  <div>
+                    <h5 class="text-white mb-2">
+                      Resultado final: Score 40/40 🎉
+                    </h5>
+                    <p class="text-white-50 mb-0">
+                      Transformamos um ambiente vulnerável (servidor direto na
+                      internet) em uma <strong>arquitetura em camadas</strong>:
+                      Portaria (Bastion) → Proxy (camada de borda) → AppServer
+                      (escondido). Tudo com correntes de confiança entre as
+                      camadas e acesso moderno sem chaves SSH!
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Botão pra ver laboratório completo -->
+              <div class="text-end mt-3">
+                <a
+                  href="/pages/relatorio-aws-vpc.html"
+                  class="btn btn-outline-info btn-sm"
+                >
+                  Ver relatório completo <i class="fas fa-arrow-right ms-1"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Glossário Rápido - Termos técnicos traduzidos -->
+      <div class="row mt-5">
+        <div class="col-12">
+          <div class="card bg-dark text-white border-secondary">
+            <div class="card-body">
+              <h5 class="text-white mb-3">
+                <i class="fas fa-book-open text-info me-2"></i>Glossário rápido:
+                como explicar os termos
+              </h5>
+              <div class="row">
+                <div class="col-md-3 col-6 mb-2">
+                  <span class="badge bg-secondary me-1">Instância EC2</span>
+                  <span class="text-white-50 small"
+                    >→ "Computador virtual"</span
+                  >
+                </div>
+                <div class="col-md-3 col-6 mb-2">
+                  <span class="badge bg-secondary me-1">VPC</span>
+                  <span class="text-white-50 small">→ "Bairro privado"</span>
+                </div>
+                <div class="col-md-3 col-6 mb-2">
+                  <span class="badge bg-secondary me-1">Subnet</span>
+                  <span class="text-white-50 small">→ "Rua do bairro"</span>
+                </div>
+                <div class="col-md-3 col-6 mb-2">
+                  <span class="badge bg-secondary me-1">Security Group</span>
+                  <span class="text-white-50 small">→ "Segurança do APTO"</span>
+                </div>
+                <div class="col-md-3 col-6 mb-2">
+                  <span class="badge bg-secondary me-1">NACL</span>
+                  <span class="text-white-50 small"
+                    >→ "Segurança do ANDAR"</span
+                  >
+                </div>
+                <div class="col-md-3 col-6 mb-2">
+                  <span class="badge bg-secondary me-1">IAM Role</span>
+                  <span class="text-white-50 small">→ "Crachá temporário"</span>
+                </div>
+                <div class="col-md-3 col-6 mb-2">
+                  <span class="badge bg-secondary me-1">S3 Bucket</span>
+                  <span class="text-white-50 small">→ "Pasta na nuvem"</span>
+                </div>
+                <div class="col-md-3 col-6 mb-2">
+                  <span class="badge bg-secondary me-1">Bastion Host</span>
+                  <span class="text-white-50 small"
+                    >→ "Portaria do prédio"</span
+                  >
+                </div>
+              </div>
+              <p class="text-white-50 small mt-2 mb-0">
+                <i class="fas fa-info-circle text-info me-1"></i>
+                Use essas analogias pra explicar pra qualquer pessoa - mesmo
+                quem nunca viu AWS!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ===== FIM DA NOVA SEÇÃO ===== -->
     <!-- Footer -->
     <footer class="container-fluid py-4 mt-5 border-top border-secondary">
       <div class="container text-center text-white-50">
