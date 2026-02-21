@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CyberSec Nuvem | SENAI</title>
+    <title>CyberSec Nuvem</title>
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90' fill='%2317a2b8'%3E☁️%3C/text%3E%3C/svg%3E"
@@ -106,6 +106,9 @@
             ><i class="fas fa-network-wired me-1"></i>Relatório VPC</a
           >
         </nav>
+        <a class="nav-link text-white" href="/pages/lab-kms-criptografia.html"
+          ><i class="fas fa-key me-1"></i>KMS</a
+        >
       </div>
     </header>
 
@@ -511,11 +514,8 @@
 
               <!-- Botão pra ver laboratório completo -->
               <div class="text-end mt-3">
-                <a
-                  href="/pages/lab-aws.html"
-                  class="btn btn-outline-info btn-sm"
-                >
-                  Ver laboratório completo
+                <a href="/pages/lab-aws.html" class="btn btn-outline-info">
+                  <i class="fas fa-microscope me-1"></i>Ver laboratório completo
                   <i class="fas fa-arrow-right ms-1"></i>
                 </a>
               </div>
@@ -805,9 +805,10 @@
               <div class="text-end mt-3">
                 <a
                   href="/pages/relatorio-aws-vpc.html"
-                  class="btn btn-outline-info btn-sm"
+                  class="btn btn-outline-info"
                 >
-                  Ver relatório completo <i class="fas fa-arrow-right ms-1"></i>
+                  <i class="fas fa-microscope me-1"></i> Ver relatório completo
+                  <i class="fas fa-arrow-right ms-1"></i>
                 </a>
               </div>
             </div>
@@ -872,6 +873,494 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+    <!-- ===== FIM DA NOVA SEÇÃO ===== -->
+    <!-- ===== NOVA SEÇÃO: LABORATÓRIO KMS & CRIPTOGRAFIA ===== -->
+    <section id="laboratorio-kms" class="container my-5">
+      <!-- Cabeçalho da seção -->
+      <div class="text-center mb-5">
+        <span class="badge bg-info text-dark mb-3">
+          <i class="fas fa-microscope me-1"></i> Mão na Massa - Lab 3
+        </span>
+        <h3 class="display-6 fw-bold text-white mb-3">
+          <i class="fas fa-key me-2"></i>Criptografia na Nuvem: KMS Explicado
+        </h3>
+        <p class="lead text-white-50 col-lg-8 mx-auto">
+          Como proteger dados na nuvem usando chaves de criptografia - explicado
+          de um jeito que qualquer um entende! 🔐
+        </p>
+      </div>
+
+      <!-- Card principal - Visão Geral -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <div
+            class="card bg-dark text-white border-secondary animate__animated animate__fadeInUp"
+          >
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-4">
+                <div class="me-3">
+                  <i class="fas fa-shield-halos fa-3x text-info"></i>
+                </div>
+                <div>
+                  <h4 class="text-white mb-1">
+                    Laboratório 3: KMS - O Cofre de Chaves da AWS
+                  </h4>
+                  <p class="text-white-50 mb-0">
+                    <i class="fab fa-aws me-1"></i>Aprenda na prática como
+                    proteger arquivos e discos virtuais com criptografia
+                  </p>
+                </div>
+              </div>
+
+              <!-- O que é KMS - Explicação pra leigo -->
+              <div
+                class="alert alert-info bg-info bg-opacity-10 text-info border-info mb-4"
+              >
+                <i class="fas fa-question-circle me-2"></i>
+                <strong>Mas afinal, o que é KMS?</strong> KMS (Key Management
+                Service) é tipo um <strong>"guarda-chaves digital"</strong> da
+                AWS. Sabe quando você tem várias chaves de casa, do carro, do
+                trabalho? O KMS é o lugar seguro onde você guarda todas essas
+                chaves, e só quem você autoriza pode pegar elas emprestado!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards de conceitos principais -->
+      <div class="row g-4 mb-5">
+        <!-- Card: Chave CMK -->
+        <div class="col-md-4">
+          <div class="card bg-dark text-white border-secondary h-100">
+            <div class="card-body">
+              <div class="text-center mb-3">
+                <i class="fas fa-key fa-3x text-info"></i>
+              </div>
+              <h5 class="text-white text-center">Chave CMK</h5>
+              <p class="text-white-50 small mb-2">
+                <span class="badge bg-secondary">Tradução:</span>
+                <strong>"Chave Mestra"</strong>
+              </p>
+              <p class="text-white-50">
+                É a chave principal, tipo a <strong>chave do cofre</strong>.
+                Você cria ela uma vez e usa pra proteger tudo que é importante.
+                No laboratório, criamos a <code>MyKMSKey</code> - nossa chave
+                mestra pessoal.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: Criptografia S3 -->
+        <div class="col-md-4">
+          <div class="card bg-dark text-white border-secondary h-100">
+            <div class="card-body">
+              <div class="text-center mb-3">
+                <i class="fas fa-lock fa-3x text-info"></i>
+              </div>
+              <h5 class="text-white text-center">SSE-KMS (S3)</h5>
+              <p class="text-white-50 small mb-2">
+                <span class="badge bg-secondary">Tradução:</span>
+                <strong>"Arquivos Trancados"</strong>
+              </p>
+              <p class="text-white-50">
+                É quando você guarda um arquivo na nuvem e
+                <strong>tranca ele com sua chave</strong>. Só quem tem a chave
+                (ou permissão) consegue abrir. No lab, protegemos uma imagem
+                chamada <code>clock.png</code>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: Criptografia EBS -->
+        <div class="col-md-4">
+          <div class="card bg-dark text-white border-secondary h-100">
+            <div class="card-body">
+              <div class="text-center mb-3">
+                <i class="fas fa-hdd fa-3x text-info"></i>
+              </div>
+              <h5 class="text-white text-center">EBS Criptografado</h5>
+              <p class="text-white-50 small mb-2">
+                <span class="badge bg-secondary">Tradução:</span>
+                <strong>"HD Virtual Blindado"</strong>
+              </p>
+              <p class="text-white-50">
+                Imagina que você tem um computador na nuvem (EC2). O disco dele
+                (EBS) pode ser criptografado - tipo um
+                <strong>HD com senha</strong> que pede a chave toda vez que liga
+                a máquina.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Explicação passo a passo do laboratório -->
+      <div class="card bg-dark text-white border-secondary mb-4">
+        <div class="card-body">
+          <h4 class="text-white mb-4">
+            <i class="fas fa-clipboard-list text-info me-2"></i>O que aprendemos
+            na prática:
+          </h4>
+
+          <!-- Timeline visual -->
+          <div class="row g-3">
+            <!-- Passo 1 -->
+            <div class="col-12">
+              <div class="d-flex">
+                <div class="me-3 text-center" style="min-width: 40px">
+                  <span
+                    class="badge bg-info text-dark"
+                    style="
+                      font-size: 1.1rem;
+                      width: 30px;
+                      height: 30px;
+                      border-radius: 50%;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                    "
+                    >1</span
+                  >
+                </div>
+                <div class="flex-grow-1 pb-3">
+                  <h5 class="text-white">Criamos o "guarda-chaves"</h5>
+                  <p class="text-white-50">
+                    <strong>O que fizemos:</strong> Provisionamos uma chave
+                    mestra (CMK) chamada MyKMSKey. É como se tivéssemos comprado
+                    um cofre novo e criado a primeira chave dele.
+                  </p>
+                  <div class="alert-tip p-2 small">
+                    <i class="fas fa-lightbulb me-1"></i> Diferente das chaves
+                    padrão da AWS, essa é <strong>nossa chave pessoal</strong> -
+                    podemos desativar, apagar ou bloquear quando quisermos!
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Passo 2 -->
+            <div class="col-12">
+              <div class="d-flex">
+                <div class="me-3 text-center" style="min-width: 40px">
+                  <span
+                    class="badge bg-info text-dark"
+                    style="
+                      font-size: 1.1rem;
+                      width: 30px;
+                      height: 30px;
+                      border-radius: 50%;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                    "
+                    >2</span
+                  >
+                </div>
+                <div class="flex-grow-1 pb-3">
+                  <h5 class="text-white">Trancamos um arquivo no S3</h5>
+                  <p class="text-white-50">
+                    <strong>O que fizemos:</strong> Fizemos upload de uma imagem
+                    (clock.png) e usamos nossa chave MyKMSKey pra criptografar
+                    ela.
+                  </p>
+                  <p class="text-white-50 mb-0">
+                    <i class="fas fa-arrow-right text-info me-1"></i>
+                    <strong>Resultado:</strong> O arquivo ficou guardado, mas
+                    trancado. Só abre quem tiver a chave!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Passo 3 -->
+            <div class="col-12">
+              <div class="d-flex">
+                <div class="me-3 text-center" style="min-width: 40px">
+                  <span
+                    class="badge bg-info text-dark"
+                    style="
+                      font-size: 1.1rem;
+                      width: 30px;
+                      height: 30px;
+                      border-radius: 50%;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                    "
+                    >3</span
+                  >
+                </div>
+                <div class="flex-grow-1 pb-3">
+                  <h5 class="text-white">
+                    Testamos o acesso público vs. autorizado
+                  </h5>
+                  <p class="text-white-50">
+                    <strong>O que fizemos:</strong> Tentamos acessar a imagem de
+                    duas formas:
+                  </p>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="alert-obstacle p-2 small">
+                        <i class="fas fa-times-circle me-1"></i>
+                        <strong>Acesso público:</strong> Link direto - NEGADO!
+                        (KMS bloqueou)
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="alert-success p-2 small">
+                        <i class="fas fa-check-circle me-1"></i>
+                        <strong>Acesso autorizado:</strong> URL especial -
+                        FUNCIONOU! (KMS liberou a chave)
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-white-50 mt-2 small">
+                    <i class="fas fa-key me-1"></i> <strong>Tradução:</strong> É
+                    como se o arquivo estivesse num cofre. Qualquer um pode
+                    bater no cofre, mas só quem tem a chave (permissão) consegue
+                    abrir!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Passo 4 -->
+            <div class="col-12">
+              <div class="d-flex">
+                <div class="me-3 text-center" style="min-width: 40px">
+                  <span
+                    class="badge bg-info text-dark"
+                    style="
+                      font-size: 1.1rem;
+                      width: 30px;
+                      height: 30px;
+                      border-radius: 50%;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                    "
+                    >4</span
+                  >
+                </div>
+                <div class="flex-grow-1 pb-3">
+                  <h5 class="text-white">Auditamos quem usou a chave</h5>
+                  <p class="text-white-50">
+                    <strong>O que fizemos:</strong> Olhamos os logs do
+                    CloudTrail (o "detetive" da AWS).
+                  </p>
+                  <p class="text-white-50 mb-0">
+                    <i class="fas fa-search text-info me-1"></i>
+                    <strong>Descobrimos:</strong> Toda vez que alguém usa a
+                    chave, fica registrado: quem usou, quando usou, de onde
+                    usou. Perfeito pra auditoria!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Passo 5 -->
+            <div class="col-12">
+              <div class="d-flex">
+                <div class="me-3 text-center" style="min-width: 40px">
+                  <span
+                    class="badge bg-info text-dark"
+                    style="
+                      font-size: 1.1rem;
+                      width: 30px;
+                      height: 30px;
+                      border-radius: 50%;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                    "
+                    >5</span
+                  >
+                </div>
+                <div class="flex-grow-1 pb-3">
+                  <h5 class="text-white">
+                    Criptografamos o HD de um computador virtual
+                  </h5>
+                  <p class="text-white-50">
+                    <strong>O que fizemos:</strong> Pegamos um servidor EC2 que
+                    já existia e "transplantamos" o disco dele pra um disco
+                    criptografado.
+                  </p>
+                  <ul class="text-white-50 small">
+                    <li>🛑 Paramos a máquina</li>
+                    <li>📸 Tiramos uma foto do disco (snapshot)</li>
+                    <li>
+                      🔐 Criamos um disco novo a partir da foto, ativando a
+                      criptografia
+                    </li>
+                    <li>🔄 Colocamos o disco novo na máquina</li>
+                    <li>✅ Ligamos de novo - funcionou perfeitamente!</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Passo 6 - Kill Switch -->
+            <div class="col-12">
+              <div class="d-flex">
+                <div class="me-3 text-center" style="min-width: 40px">
+                  <span
+                    class="badge bg-info text-dark"
+                    style="
+                      font-size: 1.1rem;
+                      width: 30px;
+                      height: 30px;
+                      border-radius: 50%;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                    "
+                    >6</span
+                  >
+                </div>
+                <div class="flex-grow-1">
+                  <h5 class="text-white">
+                    Ativamos o "Kill Switch" (Botão de Emergência)
+                  </h5>
+                  <p class="text-white-50">
+                    <strong>O que fizemos:</strong> Simulamos um ataque hacker e
+                    desativamos a chave MyKMSKey completamente.
+                  </p>
+                  <div class="alert-obstacle p-2">
+                    <i class="fas fa-exclamation-triangle me-1"></i>
+                    <strong>Resultado DRAMÁTICO:</strong> Imediatamente, ninguém
+                    mais conseguiu:
+                    <ul class="mt-1 mb-0 small">
+                      <li>📁 Acessar a imagem no S3</li>
+                      <li>
+                        💻 Ligar o servidor EC2 (pediu a chave e não tinha)
+                      </li>
+                    </ul>
+                  </div>
+                  <p class="text-white-50 mt-2">
+                    <i class="fas fa-lightbulb text-warning me-1"></i>
+                    <strong>Lição poderosa:</strong> Com uma chave mestra, você
+                    pode
+                    <strong
+                      >bloquear o acesso a TODOS os dados da empresa em
+                      segundos</strong
+                    >
+                    se detectar um ataque. Isso se chama "Kill Switch"!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Glossário de termos traduzidos -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card bg-dark text-white border-secondary">
+            <div class="card-body">
+              <h5 class="text-white mb-3">
+                <i class="fas fa-book-open text-info me-2"></i>Glossário KMS -
+                Tradutor de Termos Técnicos
+              </h5>
+              <div class="row">
+                <div class="col-md-4 mb-2">
+                  <span class="badge bg-secondary me-1">KMS</span>
+                  <span class="text-white-50 small"
+                    >→ "Guarda-chaves digital"</span
+                  >
+                </div>
+                <div class="col-md-4 mb-2">
+                  <span class="badge bg-secondary me-1">CMK</span>
+                  <span class="text-white-50 small"
+                    >→ "Chave mestra / Chave do cofre"</span
+                  >
+                </div>
+                <div class="col-md-4 mb-2">
+                  <span class="badge bg-secondary me-1">SSE-KMS</span>
+                  <span class="text-white-50 small"
+                    >→ "Arquivo trancado no armário"</span
+                  >
+                </div>
+                <div class="col-md-4 mb-2">
+                  <span class="badge bg-secondary me-1">EBS</span>
+                  <span class="text-white-50 small"
+                    >→ "HD virtual do servidor"</span
+                  >
+                </div>
+                <div class="col-md-4 mb-2">
+                  <span class="badge bg-secondary me-1">CloudTrail</span>
+                  <span class="text-white-50 small"
+                    >→ "Detetive / Câmera de segurança"</span
+                  >
+                </div>
+                <div class="col-md-4 mb-2">
+                  <span class="badge bg-secondary me-1">Kill Switch</span>
+                  <span class="text-white-50 small"
+                    >→ "Botão de emergência / Autodestruição"</span
+                  >
+                </div>
+                <div class="col-md-4 mb-2">
+                  <span class="badge bg-secondary me-1">Snapshot</span>
+                  <span class="text-white-50 small"
+                    >→ "Foto do disco / Backup pontual"</span
+                  >
+                </div>
+                <div class="col-md-4 mb-2">
+                  <span class="badge bg-secondary me-1"
+                    >Envelope Encryption</span
+                  >
+                  <span class="text-white-50 small"
+                    >→ "Chave dentro de outra chave (Matrioska)"</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resultado final e score -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="card bg-dark text-white border-success">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="me-3">
+                  <i class="fas fa-trophy fa-3x text-warning"></i>
+                </div>
+                <div>
+                  <h5 class="text-white mb-1">
+                    Resultado Final: 100% de Conformidade! 🎉
+                  </h5>
+                  <p class="text-white-50 mb-0">
+                    Laboratório concluído com sucesso! Implementamos uma
+                    arquitetura de proteção de dados "zero-trust" usando KMS.
+                    Agora sabemos na prática como:
+                  </p>
+                  <ul class="text-white-50 small mt-2">
+                    <li>🔐 Proteger arquivos no S3 com criptografia</li>
+                    <li>💾 Criptografar discos de servidores EC2</li>
+                    <li>📋 Auditar quem usou as chaves</li>
+                    <li>🚨 Ativar o "Kill Switch" em caso de emergência</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botão pra ver laboratório completo -->
+      <div class="text-end mt-3">
+        <a href="/pages/lab-kms-criptografia.html" class="btn btn-outline-info">
+          <i class="fas fa-microscope me-1"></i>Ver laboratório completo
+          <i class="fas fa-arrow-right ms-1"></i>
+        </a>
       </div>
     </section>
     <!-- ===== FIM DA NOVA SEÇÃO ===== -->

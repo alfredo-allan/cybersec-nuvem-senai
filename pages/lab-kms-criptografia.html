@@ -42,6 +42,7 @@
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text x='0' y='14' fill='%2317a2b8'>⚡</text></svg>"
     />
     <link rel="stylesheet" href="/css/style.css" />
+
     <style>
       * {
         margin: 0;
@@ -476,7 +477,7 @@
         <div class="col-12">
           <div class="d-flex flex-wrap align-items-center mb-3">
             <span class="task-badge"
-              ><i class="fas fa-microscope"></i> Master Architect</span
+              ><i class="fas fa-microscope"></i> KMS & Criptografia</span
             >
             <span
               class="task-badge"
@@ -486,33 +487,34 @@
                 color: #17a2b8;
               "
             >
-              <i class="fas fa-cloud"></i> AWS Lab
+              <i class="fas fa-cloud"></i> AWS Security Lab
             </span>
           </div>
           <h1 class="display-5">
-            Implementação de Arquitetura de Redes Segura na AWS
+            🛡️ AWS Security Lab: Gestão de Chaves e Criptografia com KMS
           </h1>
           <p class="lead">
-            Documentação completa: governança de rotas, perímetro de borda,
-            isolamento da camada de aplicação, Security Group Chaining, Bastion
-            Host e Session Manager
+            Implementação de uma arquitetura de proteção de dados "zero-trust"
+            na AWS, utilizando o Key Management Service (KMS) para gerenciar o
+            ciclo de vida de criptografia de objetos no S3 e volumes de
+            inicialização no EC2.
           </p>
 
           <div class="mt-4">
             <div class="metric-item">
-              <i class="fas fa-clock"></i> 4h de laboratório
+              <i class="fas fa-clock"></i> 3h de laboratório
             </div>
             <div class="metric-item">
               <i class="fas fa-chart-line"></i> Nível: Avançado
             </div>
             <div class="metric-item">
-              <i class="fas fa-exclamation-triangle"></i> 8 tasks concluídas
+              <i class="fas fa-tasks"></i> 8 tasks concluídas
             </div>
             <div class="metric-item">
-              <i class="fas fa-image"></i> 12 capturas de tela
+              <i class="fas fa-image"></i> 10 capturas de tela
             </div>
             <div class="metric-item">
-              <i class="fas fa-check-circle text-success"></i> Score: 40/40
+              <i class="fas fa-check-circle text-success"></i> Score: 100%
             </div>
           </div>
         </div>
@@ -528,470 +530,461 @@
               <i class="fas fa-list text-info me-2"></i>Tasks
             </h5>
             <a href="#task1"
-              ><i class="fas fa-clipboard-list"></i> Task 1 - Governança de
-              Rotas</a
+              ><i class="fas fa-key"></i> Task 1 - Provisionamento CMK</a
             >
             <a href="#task2"
-              ><i class="fas fa-shield-alt"></i> Task 2 - Perímetro de Borda</a
+              ><i class="fas fa-lock"></i> Task 2 - Criptografia S3</a
             >
             <a href="#task3"
-              ><i class="fas fa-lock"></i> Task 3 & 4 - Isolamento AppServer</a
+              ><i class="fas fa-ban"></i> Task 3 & 4 - Desafio de Acesso</a
             >
             <a href="#task5"
-              ><i class="fas fa-link"></i> Task 5 - Security Group Chaining</a
+              ><i class="fas fa-history"></i> Task 5 - Auditoria CloudTrail</a
+            >
+            <a href="#task6"
+              ><i class="fas fa-hdd"></i> Task 6 - Criptografia EBS</a
             >
             <a href="#task7"
-              ><i class="fas fa-terminal"></i> Task 7 - Bastion Host (Jump
-              Box)</a
-            >
-            <a href="#task8"
-              ><i class="fas fa-globe"></i> Task 8 - Session Manager</a
+              ><i class="fas fa-power-off"></i> Task 7 & 8 - Kill Switch</a
             >
           </div>
         </div>
 
         <!-- Conteúdo principal -->
         <div class="col-lg-9">
-          <!-- TASK 1: Governança e Padronização de Rotas -->
+          <!-- TASK 1: Provisionamento da Customer Master Key -->
           <section id="task1" class="mb-5 animate-on-scroll">
             <div class="card">
               <div class="card-body">
                 <h2 class="card-title">
-                  <i class="fas fa-route"></i>
-                  Task 1: Governança e Padronização de Rotas
+                  <i class="fas fa-key"></i>
+                  Task 1: Provisionamento da Customer Master Key (CMK)
                 </h2>
 
                 <p class="text-white-50">
-                  <strong>Objetivo:</strong> Identificar e etiquetar
-                  corretamente os recursos de rede para conformidade.
+                  <strong>📘 Procedimento:</strong> Para iniciar a governança
+                  dos dados, criamos uma chave simétrica personalizada na região
+                  us-east-1. A configuração focou no princípio do menor
+                  privilégio, atribuindo permissões de administração e uso
+                  apenas à role específica do laboratório (voclabs).
                 </p>
 
                 <div class="step mt-4">
                   <h5>
-                    <span class="step-number">1</span> Localização da Tabela de
-                    Rotas
+                    <span class="step-number">1</span> Configurações Críticas
                   </h5>
-                  <p class="text-white-50">
-                    <strong>Onde ir:</strong> VPC > Tabelas de rotas.
-                  </p>
-                  <p class="text-white-50">
-                    <strong>Ação Realizada:</strong> Localizada a tabela
-                    rtb-0ad4272549e9fe8cf associada à sub-rede privada e
-                    alterada a tag Name de "changeme" para "Private".
-                  </p>
-                  <p class="text-white-50">
-                    <strong>Explicação Técnica:</strong> A padronização de
-                    nomenclatura é fundamental para automação e auditoria.
-                    Garante que o tráfego da sub-rede privada seja gerenciado
-                    por uma tabela específica.
-                  </p>
+                  <ul class="text-white-50">
+                    <li>
+                      <strong>Tipo:</strong> Simétrica (Criptografia de
+                      Envelope)
+                    </li>
+                    <li><strong>Alias:</strong> MyKMSKey</li>
+                    <li><strong>Status:</strong> Habilitada</li>
+                  </ul>
+
+                  <div class="alert-tip mt-3">
+                    <i class="fas fa-lightbulb"></i>
+                    <strong>Insight Técnico:</strong> Ao criar uma chave
+                    gerenciada pelo cliente em vez de usar as chaves padrão da
+                    AWS (AWS Managed Keys), ganhamos o poder de revogar o acesso
+                    instantaneamente e auditar cada tentativa de uso de forma
+                    granular.
+                  </div>
 
                   <div class="lab-image-container">
                     <img
-                      src="/images/relatorio/01_VPC_RouteTable_Name_Updated_Private.png"
-                      alt="Tabela de rotas renomeada para Private"
+                      src="/images/relatorio/01_KMS_Key_Creation_Success.png"
+                      alt="Criação da KMS Key"
                       loading="lazy"
                     />
                     <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 1: Tabela de rotas
-                      rtb-0ad4272549e9fe8cf renomeada para "Private"
+                      <i class="fas fa-camera"></i> Figura 1: KMS Key "MyKMSKey"
+                      criada com sucesso na região us-east-1
                     </div>
-                  </div>
-
-                  <div class="alert-success mt-3">
-                    <i class="fas fa-check-circle"></i>
-                    <strong>Resultado:</strong> Governança estabelecida com
-                    nomenclatura padronizada para fácil identificação e
-                    auditoria.
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- TASK 2: Configuração do Perímetro de Borda -->
+          <!-- TASK 2: Criptografia de Objetos no S3 -->
           <section id="task2" class="mb-5 animate-on-scroll">
             <div class="card">
               <div class="card-body">
                 <h2 class="card-title">
-                  <i class="fas fa-shield-alt"></i>
-                  Task 2: Configuração do Perímetro de Borda (ProxySG2)
+                  <i class="fas fa-lock"></i>
+                  Task 2: Criptografia de Objetos no Amazon S3
                 </h2>
 
                 <p class="text-white-50">
-                  <strong>Objetivo:</strong> Habilitar o acesso público ao
-                  segundo nó de Proxy para garantir alta disponibilidade.
+                  <strong>📘 Procedimento:</strong> Realizei o upload de um
+                  ativo digital (clock.png) aplicando criptografia no lado do
+                  servidor (SSE-KMS). Diferente do padrão AES-256 comum,
+                  forçamos o S3 a utilizar a nossa MyKMSKey.
                 </p>
 
                 <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">1</span> Liberação da Porta HTTP
-                  </h5>
-                  <p class="text-white-50">
-                    <strong>Onde ir:</strong> EC2 > Grupos de Segurança >
-                    ProxySG2.
-                  </p>
-                  <p class="text-white-50">
-                    <strong>Ação Realizada:</strong> Adicionada regra de entrada
-                    para protocolo HTTP (porta 80) vinda de 0.0.0.0/0.
-                  </p>
-                  <p class="text-white-50">
-                    <strong>Explicação Técnica:</strong> Define a camada de
-                    borda como funcional, permitindo que requisições externas
-                    cheguem aos servidores de Proxy antes de serem encaminhadas
-                    internamente.
-                  </p>
+                  <h5><span class="step-number">1</span> Fluxo de Trabalho</h5>
+                  <ul class="text-white-50">
+                    <li>Upload do arquivo no bucket de destino</li>
+                    <li>
+                      Configuração manual da chave KMS para criptografia em
+                      repouso
+                    </li>
+                    <li>Validação da integridade do upload</li>
+                  </ul>
 
                   <div class="lab-image-container">
                     <img
-                      src="/images/relatorio/02_EC2_ProxySG2_Inbound_Rule_HTTP.png"
-                      alt="Regra HTTP no ProxySG2"
+                      src="/images/relatorio/02_S3_Upload_Clock_Encrypted.png"
+                      alt="Upload criptografado no S3"
                       loading="lazy"
                     />
                     <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 2: ProxySG2 - Regra
-                      de entrada HTTP liberada para 0.0.0.0/0
+                      <i class="fas fa-camera"></i> Figura 2: Upload do arquivo
+                      clock.png com criptografia SSE-KMS ativada
                     </div>
                   </div>
-
-                  <div class="lab-image-container mt-3">
-                    <img
-                      src="/images/relatorio/02_VPC_PublicSubnetA_Route_IGW_Analysis.png"
-                      alt="Análise de rota pública"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 3: Análise de rota da
-                      sub-rede pública - tráfego direcionado ao Internet Gateway
-                    </div>
-                  </div>
-                </div>
-
-                <div class="alert-success mt-3">
-                  <i class="fas fa-check-circle"></i>
-                  <strong>Resultado:</strong> Perímetro de borda configurado com
-                  alta disponibilidade através do segundo nó de Proxy.
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- TASK 3 & 4: Isolamento da Camada de Aplicação -->
+          <!-- TASK 3 & 4: Desafio de Acesso e Gatekeeping -->
           <section id="task3" class="mb-5 animate-on-scroll">
             <div class="card">
               <div class="card-body">
                 <h2 class="card-title">
-                  <i class="fas fa-lock"></i>
-                  Task 3 & 4: Isolamento da Camada de Aplicação
+                  <i class="fas fa-ban"></i>
+                  Task 3 & 4: Desafio de Acesso e Gatekeeping
                 </h2>
 
                 <p class="text-white-50">
-                  <strong>Objetivo:</strong> Remover a exposição direta do
-                  servidor de aplicação à internet.
+                  <strong>📘 Procedimento:</strong> Testamos a eficácia da
+                  barreira criptográfica. Ao tentar acessar o arquivo via URL
+                  pública direta (unauthenticated), o sistema retornou erro. O
+                  acesso só foi possível através de uma URL pré-assinada gerada
+                  pelo console (authenticated).
                 </p>
 
                 <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">1</span> Exclusão da Regra Pública
-                  </h5>
-                  <p class="text-white-50">
-                    <strong>Onde ir:</strong> EC2 > Grupos de Segurança >
-                    AppServerSG.
-                  </p>
-                  <p class="text-white-50">
-                    <strong>Ação Realizada:</strong> Exclusão da regra de
-                    entrada HTTP para 0.0.0.0/0.
-                  </p>
-                  <p class="text-white-50">
-                    <strong>Explicação Técnica:</strong> Aplicação do princípio
-                    de "Zero Trust" externo. O AppServer passa a ser invisível
-                    para varreduras públicas, permitindo acesso apenas via
-                    tráfego controlado.
-                  </p>
+                  <h5><span class="step-number">1</span> Resultados Obtidos</h5>
 
-                  <div class="lab-image-container">
+                  <div class="alert-obstacle mt-2">
+                    <i class="fas fa-times-circle"></i>
+                    <strong>Acesso Público:</strong> Bloqueado - KMS recusou a
+                    descriptografia para usuário anônimo
+                  </div>
+
+                  <div class="alert-success mt-2">
+                    <i class="fas fa-check-circle"></i>
+                    <strong>Acesso Autenticado:</strong> Sucesso - KMS validou
+                    as credenciais IAM e liberou a chave de dados
+                  </div>
+
+                  <div class="lab-image-container mt-3">
                     <img
-                      src="/images/relatorio/04_EC2_AppServerSG_Public_Access_Removed.png"
-                      alt="Acesso público removido do AppServer"
+                      src="/images/relatorio/03_S3_Public_Access_Denied.png"
+                      alt="Acesso público negado"
                       loading="lazy"
                     />
                     <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 4: AppServerSG -
-                      Regra HTTP pública removida com sucesso
-                    </div>
-                  </div>
-
-                  <div class="alert-obstacle mt-3">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <strong>Princípio aplicado:</strong> Zero Trust externo - o
-                    AppServer agora é invisível para varreduras públicas.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- TASK 5: Relação de Confiança (Security Group Chaining) -->
-          <section id="task5" class="mb-5 animate-on-scroll">
-            <div class="card">
-              <div class="card-body">
-                <h2 class="card-title">
-                  <i class="fas fa-link"></i>
-                  Task 5: Relação de Confiança (Security Group Chaining)
-                </h2>
-
-                <p class="text-white-50">
-                  <strong>Objetivo:</strong> Permitir comunicação apenas entre
-                  camadas autorizadas (Proxy -> App).
-                </p>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">1</span> Configuração da Origem
-                    por Security Group
-                  </h5>
-                  <p class="text-white-50">
-                    <strong>Onde ir:</strong> AppServerSG > Editar regras de
-                    entrada.
-                  </p>
-                  <p class="text-white-50">
-                    <strong>Ação Realizada:</strong> Adicionada regra HTTP (80)
-                    tendo como Origem o ID do Security Group dos Proxies
-                    (sg-0c6b5965071a066a8).
-                  </p>
-                  <p class="text-white-50">
-                    <strong>Explicação Técnica:</strong> Em vez de liberar IPs,
-                    liberamos o "grupo". Isso cria um funil de segurança
-                    dinâmico onde apenas instâncias com a identidade de "Proxy"
-                    podem falar com o AppServer.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/05_AppServerSG_Validated_ProxySG_Reference.png"
-                      alt="Validação da referência ao ProxySG"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 5: Validação da
-                      referência ao Security Group dos Proxies
+                      <i class="fas fa-camera"></i> Figura 3: Erro XML Access
+                      Denied ao tentar acesso público direto
                     </div>
                   </div>
 
                   <div class="lab-image-container mt-3">
                     <img
-                      src="/images/relatorio/06_AppServerSG_Final_Rules_Applied.png"
-                      alt="Regras finais do AppServerSG"
+                      src="/images/relatorio/04_S3_Authenticated_Decryption_Success.png"
+                      alt="Acesso autenticado com sucesso"
                       loading="lazy"
                     />
                     <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 6: AppServerSG -
-                      Regras finais aplicadas com origem nos Security Groups dos
-                      Proxies
+                      <i class="fas fa-camera"></i> Figura 4: Imagem renderizada
+                      com sucesso via acesso autenticado
                     </div>
-                  </div>
-
-                  <div class="alert-tip mt-3">
-                    <i class="fas fa-lightbulb"></i>
-                    <strong>Conceito chave:</strong> Security Group Chaining
-                    permite uma relação de confiança dinâmica - novos proxies
-                    adicionados ao grupo automaticamente ganham acesso.
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- TASK 7: Acesso Administrativo via Bastion Host -->
+          <!-- TASK 5: Auditoria com AWS CloudTrail -->
+          <section id="task5" class="mb-5 animate-on-scroll">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title">
+                  <i class="fas fa-history"></i>
+                  Task 5: Auditoria com AWS CloudTrail
+                </h2>
+
+                <p class="text-white-50">
+                  <strong>📘 Procedimento:</strong> Analisamos o rastro digital
+                  das operações. Filtramos os logs do CloudTrail para
+                  identificar as chamadas de API originadas pelo serviço
+                  kms.amazonaws.com.
+                </p>
+
+                <div class="step mt-4">
+                  <h5><span class="step-number">1</span> Observabilidade</h5>
+                  <p class="text-white-50">
+                    Confirmamos que cada evento de criação, listagem e uso da
+                    chave foi registrado com o carimbo de data/hora, IP de
+                    origem e a identidade do usuário (alfredo), garantindo
+                    não-repúdio.
+                  </p>
+
+                  <div class="lab-image-container">
+                    <img
+                      src="/images/relatorio/05_CloudTrail_KMS_Auditory_Logs.png"
+                      alt="Logs do CloudTrail"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 5: Logs do CloudTrail
+                      filtrando chamadas de API do KMS
+                    </div>
+                  </div>
+
+                  <div class="alert-tip mt-3">
+                    <i class="fas fa-lightbulb"></i>
+                    <strong>Conceito chave:</strong> O CloudTrail permite
+                    rastrear exatamente quem usou a chave, quando e de onde -
+                    garantindo não-repúdio.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- TASK 6: Criptografia Post-Mortem de Volumes EBS -->
+          <section id="task6" class="mb-5 animate-on-scroll">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title">
+                  <i class="fas fa-hdd"></i>
+                  Task 6: Criptografia "Post-Mortem" de Volumes EBS
+                </h2>
+
+                <p class="text-white-50">
+                  <strong>📘 Procedimento:</strong> O desafio foi criptografar o
+                  volume de boot de uma instância EC2 que já existia. Como não é
+                  possível criptografar volumes ativos, realizamos um
+                  "transplante" técnico.
+                </p>
+
+                <div class="step mt-4">
+                  <h5>
+                    <span class="step-number">1</span> Etapas do Transplante
+                  </h5>
+                  <ul class="text-white-50">
+                    <li><strong>Stop:</strong> Interrupção da LabInstance</li>
+                    <li>
+                      <strong>Snapshot:</strong> Criação de uma imagem do volume
+                      original
+                    </li>
+                    <li>
+                      <strong>Re-Create:</strong> Criação de um novo volume a
+                      partir do snapshot, ativando a criptografia com a MyKMSKey
+                      durante o processo
+                    </li>
+                    <li>
+                      <strong>Attach:</strong> Associação do novo volume
+                      criptografado no ponto de montagem raiz /dev/xvda
+                    </li>
+                  </ul>
+
+                  <div class="lab-image-container mt-3">
+                    <img
+                      src="/images/relatorio/06_EC2_Instance_Stopped.png"
+                      alt="Instância EC2 parada"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 6: Instância EC2
+                      parada para início do procedimento
+                    </div>
+                  </div>
+
+                  <div class="lab-image-container mt-3">
+                    <img
+                      src="/images/relatorio/06_EC2_Volume_Encryption_Setup.png"
+                      alt="Configuração de criptografia do volume"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 7: Configuração da
+                      criptografia do volume com MyKMSKey
+                    </div>
+                  </div>
+
+                  <div class="lab-image-container mt-3">
+                    <img
+                      src="/images/relatorio/06_EC2_Attach_Encrypted_Volume.png"
+                      alt="Anexação do volume criptografado"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 8: Anexação do novo
+                      volume criptografado ao ponto de montagem /dev/xvda
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- TASK 7 & 8: Validação de Boot e Kill Switch -->
           <section id="task7" class="mb-5 animate-on-scroll">
             <div class="card">
               <div class="card-body">
                 <h2 class="card-title">
-                  <i class="fas fa-terminal"></i>
-                  Task 7: Acesso Administrativo via Bastion Host (Jump Box)
+                  <i class="fas fa-power-off"></i>
+                  Task 7 & 8: Validação de Boot e Kill Switch
                 </h2>
 
                 <p class="text-white-50">
-                  <strong>Objetivo:</strong> Acessar o terminal de instâncias
-                  privadas de forma segura.
+                  <strong>📘 Procedimento Final:</strong> Validamos o sucesso do
+                  boot com o novo volume e, em seguida, simulamos um
+                  comprometimento de segurança desativando a chave mestra.
                 </p>
 
                 <div class="step mt-4">
                   <h5>
-                    <span class="step-number">1</span> Configuração do Bastion
-                    Host
+                    <span class="step-number">1</span> Conclusão do Teste de
+                    Stress
                   </h5>
-                  <p class="text-white-50">
-                    <strong>Ação Realizada:</strong> Renomeação da instância
-                    para Bastion e criação do BastionSG permitindo SSH (22).
-                    Realizado o salto SSH usando Agent Forwarding.
-                  </p>
 
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/07_AppServerSG_SSH_Source_Bastion.png"
-                      alt="Regra SSH com origem no Bastion"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 7: AppServerSG -
-                      Regra SSH liberada apenas para o Security Group do Bastion
-                    </div>
-                  </div>
-
-                  <h5 class="mt-4">
-                    <span class="step-number">2</span> Comandos de Acesso
-                  </h5>
-                  <p class="text-white-50">
-                    <strong>No Terminal:</strong> Executado
-                    <code>ssh -A ec2-user@BastionIP</code> e depois
-                    <code>ssh ec2-user@AppServerIP</code>.
-                  </p>
-                  <p class="text-white-50">
-                    <strong>Comando de Prova:</strong>
-                    <code>touch newfile.txt</code> criado no diretório raiz do
-                    AppServer.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/07_Terminal_SSH_Success_AppServer.png"
-                      alt="SSH bem-sucedido no AppServer"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 8: Terminal - Acesso
-                      SSH bem-sucedido ao AppServer via Bastion Host
-                    </div>
-                  </div>
-
-                  <div class="alert-tip mt-3">
-                    <i class="fas fa-lightbulb"></i>
-                    <strong>Explicação Técnica:</strong> O Bastion Host atua
-                    como um portão controlado. O uso de Agent Forwarding evita o
-                    armazenamento de chaves .pem dentro de servidores públicos,
-                    uma melhor prática de segurança.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- TASK 8: AWS Session Manager -->
-          <section id="task8" class="mb-5 animate-on-scroll">
-            <div class="card">
-              <div class="card-body">
-                <h2 class="card-title">
-                  <i class="fas fa-globe"></i>
-                  Task 8: Gestão de Sistemas via AWS Session Manager
-                </h2>
-
-                <p class="text-white-50">
-                  <strong>Objetivo:</strong> Gerenciar servidores sem
-                  necessidade de abrir portas de rede (Portless Access).
-                </p>
-
-                <div class="step mt-4">
-                  <h5>
-                    <span class="step-number">1</span> Acesso via Session
-                    Manager
-                  </h5>
-                  <p class="text-white-50">
-                    <strong>Onde ir:</strong> Console EC2 > AppServer > Conectar
-                    > Session Manager.
-                  </p>
-                  <p class="text-white-50">
-                    <strong>Ação Realizada:</strong> Alteração do arquivo
-                    index.html via terminal web com o comando
-                    <code>sudo sed</code>.
-                  </p>
-                  <p class="text-white-50">
-                    <strong>Explicação Técnica:</strong> O Session Manager
-                    utiliza o agente SSM e permissões IAM para prover acesso ao
-                    terminal via HTTPS (443), eliminando a necessidade de
-                    gerenciar chaves SSH ou abrir a porta 22 na rede.
-                  </p>
-
-                  <div class="lab-image-container">
-                    <img
-                      src="/images/relatorio/08_SessionManager_Webpage_Edit_Success.png"
-                      alt="Edição via Session Manager"
-                      loading="lazy"
-                    />
-                    <div class="image-caption">
-                      <i class="fas fa-camera"></i> Figura 9: Session Manager -
-                      Edição bem-sucedida do arquivo index.html via terminal web
-                    </div>
-                  </div>
-
-                  <div class="alert-success mt-3">
+                  <div class="alert-success mt-2">
                     <i class="fas fa-check-circle"></i>
-                    <strong>Resultado:</strong> Acesso Portless implementado -
-                    gerenciamento do servidor sem abrir portas de rede.
+                    <strong>Task 7:</strong> A instância iniciou normalmente,
+                    provando que o volume criptografado foi aceito.
+                  </div>
+
+                  <div class="alert-obstacle mt-2">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Task 8 (Kill Switch):</strong> Ao desativar a
+                    MyKMSKey, tanto o acesso ao S3 quanto futuros boots do EC2
+                    foram impedidos. Isso demonstra o Kill Switch — a capacidade
+                    de tornar todos os dados da empresa ilegíveis em segundos em
+                    caso de ataque.
+                  </div>
+
+                  <div class="lab-image-container mt-3">
+                    <img
+                      src="/images/relatorio/07_EC2_Boot_Success_Encrypted.png"
+                      alt="Boot bem-sucedido com volume criptografado"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 9: Instância EC2
+                      iniciada com sucesso com volume criptografado
+                    </div>
+                  </div>
+
+                  <div class="lab-image-container mt-3">
+                    <img
+                      src="/images/relatorio/08_KMS_Key_Disabling.png"
+                      alt="Desativação da chave KMS"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 10: Desativação da
+                      chave MyKMSKey (Kill Switch ativado)
+                    </div>
+                  </div>
+
+                  <div class="lab-image-container mt-3">
+                    <img
+                      src="/images/relatorio/09_S3_Decryption_Error_Key_Disabled.png"
+                      alt="Erro de descriptografia com chave desativada"
+                      loading="lazy"
+                    />
+                    <div class="image-caption">
+                      <i class="fas fa-camera"></i> Figura 11: Erro de
+                      descriptografia no S3 após desativação da chave
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- Resumo e Conclusão -->
+          <!-- Conclusão do Laboratório -->
           <section class="mt-5 animate-on-scroll">
             <div class="card">
               <div class="card-body">
                 <h2 class="card-title">
                   <i class="fas fa-trophy"></i>
-                  Conclusão do Lab: Score 40/40
+                  🏁 Conclusão do Laboratório
                 </h2>
 
                 <p class="text-white-50">
-                  Este escopo documenta a jornada de um ambiente vulnerável para
-                  uma arquitetura multicamadas (Multi-tier) resiliente, com
-                  controles de segurança Stateful (Security Groups) e Stateless
-                  (NACLs) totalmente validados.
+                  O projeto demonstrou que a criptografia na AWS é uma
+                  combinação de Identidade (IAM), Armazenamento (S3/EBS) e
+                  Gestão de Chaves (KMS). O sucesso é coroado pelo relatório
+                  final de conformidade, atingindo 100% das métricas de
+                  segurança exigidas.
                 </p>
 
                 <div class="row mt-4">
                   <div class="col-md-6">
                     <div class="alert-success mb-3">
                       <i class="fas fa-check-circle"></i>
-                      <strong>✓ Task 1:</strong> Governança de rotas
+                      <strong>✓ Task 1:</strong> CMK Provisionada
                     </div>
                     <div class="alert-success mb-3">
                       <i class="fas fa-check-circle"></i>
-                      <strong>✓ Task 2:</strong> Perímetro de borda
+                      <strong>✓ Task 2:</strong> S3 SSE-KMS
                     </div>
                     <div class="alert-success mb-3">
                       <i class="fas fa-check-circle"></i>
-                      <strong>✓ Task 3 & 4:</strong> Isolamento AppServer
+                      <strong>✓ Task 3 & 4:</strong> Gatekeeping validado
                     </div>
                     <div class="alert-success mb-3">
                       <i class="fas fa-check-circle"></i>
-                      <strong>✓ Task 5:</strong> Security Group Chaining
+                      <strong>✓ Task 5:</strong> Auditoria CloudTrail
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="alert-success mb-3">
                       <i class="fas fa-check-circle"></i>
-                      <strong>✓ Task 7:</strong> Bastion Host (Jump Box)
+                      <strong>✓ Task 6:</strong> EBS criptografado
                     </div>
                     <div class="alert-success mb-3">
                       <i class="fas fa-check-circle"></i>
-                      <strong>✓ Task 8:</strong> Session Manager
+                      <strong>✓ Task 7:</strong> Boot validado
+                    </div>
+                    <div class="alert-success mb-3">
+                      <i class="fas fa-check-circle"></i>
+                      <strong>✓ Task 8:</strong> Kill Switch funcional
                     </div>
                     <div class="alert-tip mb-3">
                       <i class="fas fa-star"></i>
-                      <strong>Score Final:</strong> 40/40 - Laboratório
-                      concluído com sucesso!
+                      <strong>Score Final:</strong> 100% de conformidade
                     </div>
                   </div>
                 </div>
 
-                <div class="alert-tip mt-3">
+                <div class="lab-image-container mt-3">
+                  <img
+                    src="/images/relatorio/14_Final_Grade_Success_Report.png"
+                    alt="Relatório final de nota"
+                    loading="lazy"
+                  />
+                  <div class="image-caption">
+                    <i class="fas fa-camera"></i> Figura 12: Relatório final de
+                    conformidade - 100% das métricas atingidas
+                  </div>
+                </div>
+
+                <div class="alert-tip mt-4">
                   <i class="fas fa-info-circle"></i>
-                  <strong>Arquitetura final:</strong> Ambiente vulnerável
-                  transformado em arquitetura multicamadas (Multi-tier)
-                  resiliente, com controles Stateful (Security Groups) e
-                  Stateless (NACLs) totalmente validados.
+                  <strong>Arquitetura final:</strong> Proteção de dados
+                  "zero-trust" implementada com sucesso utilizando KMS para
+                  criptografia de objetos S3 e volumes EBS, com capacidade de
+                  Kill Switch para resposta a incidentes.
                 </div>
               </div>
             </div>
@@ -1009,18 +1002,17 @@
               <i class="fas fa-shield-halos text-info"></i> CyberSec Nuvem
             </h5>
             <p class="text-white-50">
-              Arquitetura de Redes Segura na AWS - Laboratório Master Architect
-              <br />
+              AWS Security Lab: Gestão de Chaves e Criptografia com KMS <br />
               Curso de Cibersegurança na Nuvem - SENAI
             </p>
             <p class="text-white-50 small">
               <i class="fas fa-image me-2"></i>12 capturas de tela documentadas
-              | Score: 40/40
+              | Score: 100%
             </p>
           </div>
           <div class="col-md-6 text-md-end">
             <p class="text-white-50 mb-0">
-              <i class="fas fa-code-branch text-info me-2"></i> Master Architect
+              <i class="fas fa-code-branch text-info me-2"></i> KMS & Security
             </p>
             <p class="text-white-50 small">
               <i class="fas fa-calendar-alt me-2"></i> Fevereiro 2026
